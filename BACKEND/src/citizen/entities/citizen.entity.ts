@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { User } from "src/user/entities/user.entity";
+import { User, UserSchema } from "src/user/entities/user.entity";
 
 @Schema()
 export class Citizen extends User {
@@ -11,4 +11,4 @@ export class Citizen extends User {
 
 }
 
-export const CitizenSchema  = SchemaFactory.createForClass(Citizen)
+export const CitizenSchema = UserSchema.discriminator('Citizen', SchemaFactory.createForClass(Citizen))

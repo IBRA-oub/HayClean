@@ -1,11 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCitizenDto } from './dto/create-citizen.dto';
 import { UpdateCitizenDto } from './dto/update-citizen.dto';
+import { Citizen } from './entities/citizen.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class CitizenService {
-  create(createCitizenDto: CreateCitizenDto) {
-    return 'This action adds a new citizen';
+  constructor(
+    @InjectModel(Citizen.name) private citizenModel: Model<Citizen>
+  ) { }
+  async create(createCitizenDto: CreateCitizenDto){
+    try {
+
+      const res = await this.citizenModel.create(createCitizenDto)
+      const user = await res.save()
+      return { message: 'Citizen created successfully', user };
+    } catch (error) {
+      return error
+    }
   }
 
   findAll() {

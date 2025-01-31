@@ -1,11 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAdministrationDto } from './dto/create-administration.dto';
 import { UpdateAdministrationDto } from './dto/update-administration.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Administration } from './entities/administration.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class AdministrationService {
-  create(createAdministrationDto: CreateAdministrationDto) {
-    return 'This action adds a new administration';
+  constructor(
+    @InjectModel(Administration.name) private adminstrationModel : Model<Administration>
+  ){}
+  async create(createAdministrationDto: CreateAdministrationDto) {
+    try {
+      const res = await this.adminstrationModel.create(createAdministrationDto)
+      const user  = await res.save()
+      return {message:'Admin created succcessfully',user}
+    } catch (error) {
+      return error
+    }
   }
 
   findAll() {

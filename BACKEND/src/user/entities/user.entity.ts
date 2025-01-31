@@ -15,8 +15,6 @@ export class User extends Document {
     @Prop()
     phoneNumber: number;
 
-    @Prop({ required: true, enum: ['Citoyen', 'Municipality', 'Admin'], default: 'Citoyen' })
-    role: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

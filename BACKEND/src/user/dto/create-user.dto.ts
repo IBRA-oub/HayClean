@@ -17,8 +17,4 @@ export class CreateUserDto {
     @IsNotEmpty()
     phoneNumber: number
 
-
-    @IsEnum(['Citoyen', 'Municipality', 'Admin'])
-    role: 'Citoyen' | 'Municipality' | 'Admin';
-
 }
