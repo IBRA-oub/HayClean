@@ -17,4 +17,7 @@ export class CreateUserDto {
     @IsNotEmpty()
     phoneNumber: number
 
+    @IsString()
+    image: number
+
 }
