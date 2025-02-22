@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { CitizenService } from './citizen.service';
 import { CreateCitizenDto } from './dto/create-citizen.dto';
 import { UpdateCitizenDto } from './dto/update-citizen.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('citizen')
 export class CitizenController {
-  constructor(private readonly citizenService: CitizenService) {}
+  constructor(private readonly citizenService: CitizenService) { }
 
   @Post()
-  create(@Body() createCitizenDto: CreateCitizenDto) {
-    return this.citizenService.create(createCitizenDto);
+  @UseInterceptors(FileInterceptor('image'))
+  create(@Body() createCitizenDto: CreateCitizenDto, @UploadedFile() file: Express.Multer.File) {
+    return this.citizenService.create(createCitizenDto, file);
   }
 
   @Get()

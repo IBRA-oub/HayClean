@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { MunicipalityService } from './municipality.service';
 import { CreateMunicipalityDto } from './dto/create-municipality.dto';
 import { UpdateMunicipalityDto } from './dto/update-municipality.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('municipality')
 export class MunicipalityController {
-  constructor(private readonly municipalityService: MunicipalityService) {}
+  constructor(private readonly municipalityService: MunicipalityService) { }
 
   @Post()
-  create(@Body() createMunicipalityDto: CreateMunicipalityDto) {
-    return this.municipalityService.create(createMunicipalityDto);
+  @UseInterceptors(FileInterceptor('image'))
+  create(@Body() createMunicipalityDto: CreateMunicipalityDto, @UploadedFile() file: Express.Multer.File) {
+    return this.municipalityService.create(createMunicipalityDto, file);
   }
 
   @Get()
