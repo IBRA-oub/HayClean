@@ -4,6 +4,7 @@ import { CitizenController } from './citizen.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Citizen, CitizenSchema } from './entities/citizen.entity';
 import { User, UserSchema } from 'src/user/entities/user.entity';
+import { MinioService } from 'src/services/minio';
 
 @Module({
   imports:[
@@ -12,6 +13,6 @@ import { User, UserSchema } from 'src/user/entities/user.entity';
 
   ],
   controllers: [CitizenController],
-  providers: [CitizenService],
+  providers: [CitizenService,MinioService],
 })
 export class CitizenModule {}
