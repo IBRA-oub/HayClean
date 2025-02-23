@@ -7,64 +7,84 @@ import { Model } from 'mongoose';
 import { MinioService } from 'src/services/minio';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { props } from 'src/types/loginType';
+import { VerificationCitizenService } from './aop/verificationCitizen.service';
 
 @Injectable()
 export class CitizenService {
   constructor(
     @InjectModel(Citizen.name) private citizenModel: Model<Citizen>,
-    private readonly minioService: MinioService
+    private readonly minioService: MinioService,
+    private readonly verificationService: VerificationCitizenService,
   ) { }
 
   async create(createCitizenDto: CreateCitizenDto, file?: Express.Multer.File) {
-    try {
-      let imageUrl;
-      if (file) {
-        imageUrl = await this.minioService.uploadImage({
-          buffer: file.buffer,
-          originalname: file.originalname,
-          mimetype: file.mimetype,
-        });
-      }
+    let imageUrl = file ? await this.uploadImage(file) : null;
 
-      // hash password
-      const salt = await bcrypt.genSalt(10);
-      const hashPassword = await bcrypt.hash(createCitizenDto.password, salt)
+    // hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(createCitizenDto.password, salt)
 
-      const user = await this.citizenModel.create({ ...createCitizenDto, password: hashPassword, image: imageUrl })
+    const user = await this.citizenModel.create({ ...createCitizenDto, password: hashPassword, image: imageUrl, isVerified: false })
 
-      // token
-      const payload = {
-        id: user._id,
-        email: user.email,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        city: user.city,
-        phoneNumber: user.phoneNumber,
-      }
+    // token
+    const accessToken = this.generateToken(user);
 
-      const accessToken = jwt.sign(
-        payload,
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-          expiresIn: '3h'
-        }
-      )
+    // mail virification 
+    await this.verificationService.sendVerificationEmailCitizen(user);
 
-      return { message: 'Citizen created successfully', status: 200, user, accessToken };
+    return { message: 'Citizen created successfully', status: 200, user, accessToken };
 
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new HttpException(
-          { message: 'Email already exists', status: HttpStatus.BAD_REQUEST },
-          HttpStatus.BAD_REQUEST,
-        );
-      }
+  }
 
-      throw new HttpException(
-        { message: 'Failed to create Municipality', status: HttpStatus.INTERNAL_SERVER_ERROR },
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+  async login(loginData: props) {
+    const { email, password } = loginData
+
+    if (!email || !password) {
+      return { message: 'credentials missing', status: '404' }
     }
+
+    const user = await this.citizenModel.findOne({ email });
+    if (!user) {
+      return { message: 'User not found', status: '404' };
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return { message: 'Invalid credentials', status: '401' };
+    }
+
+    // verify mail
+    if (user.verificationCode == null) {
+      await this.verificationService.sendVerificationEmailCitizen(user);
+    }
+
+    // token
+    const accessToken = this.generateToken(user);
+
+    return { message: 'login successfully', status: 200, user, accessToken };
+
+  }
+
+  private async uploadImage(file: Express.Multer.File) {
+    return await this.minioService.uploadImage({
+      buffer: file.buffer,
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+    });
+  }
+
+  private generateToken(user: Citizen) {
+    const payload = {
+      id: user._id,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      city: user.city,
+      phoneNumber: user.phoneNumber,
+    };
+
+    return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '3h' });
   }
 
   findAll() {

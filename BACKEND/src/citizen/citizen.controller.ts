@@ -1,17 +1,33 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
 import { CitizenService } from './citizen.service';
 import { CreateCitizenDto } from './dto/create-citizen.dto';
 import { UpdateCitizenDto } from './dto/update-citizen.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { props } from 'src/types/loginType';
+import { VerificationCitizenService } from './aop/verificationCitizen.service';
+
 
 @Controller('citizen')
 export class CitizenController {
-  constructor(private readonly citizenService: CitizenService) { }
+  constructor(
+    private readonly citizenService: CitizenService,
+    private readonly verificationService: VerificationCitizenService,
+  ) { }
 
-  @Post()
+  @Post('register')
   @UseInterceptors(FileInterceptor('image'))
   create(@Body() createCitizenDto: CreateCitizenDto, @UploadedFile() file: Express.Multer.File) {
     return this.citizenService.create(createCitizenDto, file);
+  }
+
+  @Post('login')
+  login(@Body() loginData: props) {
+    return this.citizenService.login(loginData)
+  }
+
+  @Post('verifyEmail')
+  verifyEmail(@Headers('authorization') authHeader: string, @Body('code') code: string) {
+    return this.verificationService.verifyEmailCitizen(authHeader, code)
   }
 
   @Get()
