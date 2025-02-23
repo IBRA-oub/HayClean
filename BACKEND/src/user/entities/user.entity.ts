@@ -18,6 +18,12 @@ export class User extends Document {
     @Prop({ required: false })
     image: string
 
+    @Prop({ required: false }) 
+    verificationCode?: string;
+
+    @Prop({ default: false }) 
+    isVerified: boolean;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User)

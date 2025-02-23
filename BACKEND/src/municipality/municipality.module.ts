@@ -5,6 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Municipality, MunicipalitySchema } from './entities/municipality.entity';
 import { User, UserSchema } from 'src/user/entities/user.entity';
 import { MinioService } from 'src/services/minio';
+import { EmailVerification } from 'src/helpers/mailVerification';
+import { VerificationMunicipalityService } from './aop/verification.service';
 
 @Module({
   imports:[
@@ -12,6 +14,6 @@ import { MinioService } from 'src/services/minio';
     MongooseModule.forFeature([{name : Municipality.name , schema : MunicipalitySchema}])
   ],
   controllers: [MunicipalityController],
-  providers: [MunicipalityService , MinioService],
+  providers: [MunicipalityService , MinioService,EmailVerification,VerificationMunicipalityService],
 })
 export class MunicipalityModule {}
