@@ -7,12 +7,13 @@ import { MunicipalityModule } from './municipality/municipality.module';
 import { AdministrationModule } from './administration/administration.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ReportModule } from './report/report.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({envFilePath:'.env' , isGlobal:true}),
     MongooseModule.forRoot(process.env.MONGODB_URI),
-    UserModule, CitizenModule, MunicipalityModule, AdministrationModule],
+    UserModule, CitizenModule, MunicipalityModule, AdministrationModule, ReportModule],
   controllers: [AppController],
   providers: [AppService],
 })

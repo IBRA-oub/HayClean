@@ -5,7 +5,9 @@ import { UpdateMunicipalityDto } from './dto/update-municipality.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { props } from 'src/types/loginType';
 import { VerificationMunicipalityService } from './aop/verification.service';
+import { ErrorInterceptor } from 'src/interceptors/error.interceptor';
 
+@UseInterceptors(ErrorInterceptor)
 @Controller('municipality')
 export class MunicipalityController {
   constructor(

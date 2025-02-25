@@ -19,7 +19,7 @@ export class User extends Document {
     image: string
 
     @Prop({ required: false }) 
-    verificationCode?: string;
+    verificationCode?: string;  
 
     @Prop({ default: false }) 
     isVerified: boolean;
