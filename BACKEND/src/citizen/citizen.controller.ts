@@ -5,8 +5,9 @@ import { UpdateCitizenDto } from './dto/update-citizen.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { props } from 'src/types/loginType';
 import { VerificationCitizenService } from './aop/verificationCitizen.service';
+import { ErrorInterceptor } from 'src/interceptors/error.interceptor';
 
-
+@UseInterceptors(ErrorInterceptor)
 @Controller('citizen')
 export class CitizenController {
   constructor(
