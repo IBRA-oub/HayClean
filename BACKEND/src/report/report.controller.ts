@@ -16,19 +16,25 @@ export class ReportController {
     return this.reportService.create(createReportDto, req.user, file);
   }
 
+  @Get('pendingReport')
+  @UseGuards(JwtAuthGuard)
+  findAllPending(@Req() req) {
+    return this.reportService.findAllPendingReport(req.user);
+  }
   @Get()
-  findAll() {
-    return this.reportService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req) {
+    return this.reportService.findAll(req.user);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.reportService.findOne(+id);
+    return this.reportService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReportDto: UpdateReportDto) {
-    return this.reportService.update(+id, updateReportDto);
+  @Patch('completed/:id')
+  update(@Param('id') id: string) {
+    return this.reportService.confermReport(id);
   }
 
   @Delete(':id')

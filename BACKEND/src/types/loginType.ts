@@ -9,3 +9,8 @@ export type citizenProp = {
   email: string,
   city : string
 }
+export type municipalityProp = {
+  name : string,
+  email: string,
+  city : string
+}
