@@ -11,6 +11,11 @@ export class CreateReportDto {
     @ArrayNotEmpty()
     @IsString({ each: true })
     type: string[];
+
+    @IsArray()
+    @IsOptional()
+    @IsString({ each: true })
+    sad?: string[];
   
     @IsBoolean()
     @IsOptional()
