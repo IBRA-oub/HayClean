@@ -32,6 +32,12 @@ export class ReportController {
     return this.reportService.findOne(id);
   }
 
+  @Post('toggleSad/:id')
+  @UseGuards(JwtAuthGuard)
+  toggleSad(@Req() req,@Param('id') id: string) {
+    return this.reportService.toggleSad(req.user , id);
+  }
+
   @Patch('completed/:id')
   update(@Param('id') id: string) {
     return this.reportService.confermReport(id);

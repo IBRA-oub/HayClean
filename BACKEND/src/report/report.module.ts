@@ -8,7 +8,6 @@ import { MinioService } from 'src/services/minio';
 
 @Module({
   imports:[
-    MongooseModule.forFeature([{name : Citizen.name , schema:CitizenSchema}]),
     MongooseModule.forFeature([{name : Report.name , schema : ReportSchema}])
   ],
   controllers: [ReportController],

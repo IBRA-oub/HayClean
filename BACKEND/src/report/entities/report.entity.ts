@@ -29,6 +29,9 @@ export class Report {
     @Prop({ required: true })
     type: string[];
 
+    @Prop({ required: false  })
+    sad: string[];
+
     @Prop({ required: false, default: false })
     inCave: boolean;
 

@@ -12,8 +12,7 @@ import { citizenProp } from 'src/types/loginType';
 @Injectable()
 export class ReportService {
   constructor(
-    @InjectModel(Report.name) private reportModel: Model<Citizen>,
-    @InjectModel(Citizen.name) private citizenModel: Model<Citizen>,
+    @InjectModel(Report.name) private reportModel: Model<Report>,
     private readonly minioService: MinioService,
   ) { }
   async create(createReportDto: CreateReportDto, user: citizenProp, file?: Express.Multer.File) {
@@ -84,6 +83,26 @@ export class ReportService {
     } catch (error) {
       return error
     }
+  }
+
+  async toggleSad(user: citizenProp, reportId: string) {
+    const email = user.email
+    const report = await this.reportModel.findById(reportId)
+   
+    if (!report) {
+      throw new Error("report not found")
+    }
+    const emailIndex = report.sad.indexOf(email);
+
+    if (emailIndex !== -1) {
+      report.sad.splice(emailIndex, 1);
+    } else {
+      report.sad.push(email);
+    }
+
+    await report.save();
+
+    return report;
   }
 
   remove(id: number) {
