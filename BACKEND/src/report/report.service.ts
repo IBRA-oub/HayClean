@@ -16,18 +16,18 @@ export class ReportService {
     @InjectModel(Citizen.name) private citizenModel: Model<Citizen>,
     private readonly minioService: MinioService,
   ) { }
-    async create(createReportDto: CreateReportDto, user : citizenProp, file?: Express.Multer.File) {
-      let imageUrl = file ? await this.uploadImage(file) : null;
+  async create(createReportDto: CreateReportDto, user: citizenProp, file?: Express.Multer.File) {
+    let imageUrl = file ? await this.uploadImage(file) : null;
 
-      const reportData = {
-        image: imageUrl,
-        ...createReportDto,
-        user
-      };
-      const newReport =  await this.reportModel.create(reportData);
+    const reportData = {
+      image: imageUrl,
+      ...createReportDto,
+      user
+    };
+    const newReport = await this.reportModel.create(reportData);
 
-      return { message: 'Report created successfully', status: 200, newReport };
-    }
+    return { message: 'Report created successfully', status: 200, newReport };
+  }
 
   private async uploadImage(file: Express.Multer.File) {
     return await this.minioService.uploadImage({
@@ -37,16 +37,53 @@ export class ReportService {
     });
   }
 
-  findAll() {
-    return `This action returns all report`;
+  async findAllPendingReport(user: citizenProp) {
+    try {
+
+      const city = user.city
+      const response = await this.reportModel.find({ "user.city": city, status: 'pending' })
+      if (response.length > 0) {
+        return response
+      } else {
+        return { message: "no report is available" }
+      }
+
+    } catch (error) {
+      return error
+    }
+  }
+  async findAll(user: citizenProp) {
+    try {
+
+      const city = user.city
+      const response = await this.reportModel.find({ "user.city": city })
+      if (response.length > 0) {
+        return response
+      } else {
+        return { message: "no report is available" }
+      }
+
+    } catch (error) {
+      return error
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} report`;
+  async findOne(id: string) {
+    try {
+      const response = await this.reportModel.findById(id)
+      return response
+    } catch (error) {
+      return error
+    }
   }
 
-  update(id: number, updateReportDto: UpdateReportDto) {
-    return `This action updates a #${id} report`;
+  async confermReport(id: string) {
+    try {
+      const response = await this.reportModel.findByIdAndUpdate(id, { status: "completed" }, { new: true })
+      return response
+    } catch (error) {
+      return error
+    }
   }
 
   remove(id: number) {
