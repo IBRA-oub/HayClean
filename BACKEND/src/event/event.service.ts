@@ -38,8 +38,19 @@ export class EventService {
     });
   }
 
-  findAll() {
-    return `This action returns all event`;
+  async findAll(user: municipalityProp) {
+    try {
+      const city = user.city;
+      const allEvent = await this.eventModel.find({ city })
+      if (allEvent.length < 0) {
+        return { message: 'no Event available' }
+      }
+
+      return allEvent
+
+    } catch (error) {
+      return error
+    }
   }
 
   findOne(id: number) {

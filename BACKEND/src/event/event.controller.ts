@@ -7,18 +7,19 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('event')
 export class EventController {
-  constructor(private readonly eventService: EventService) {}
+  constructor(private readonly eventService: EventService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('image'))
-  create(@Req() req,@Body() createEventDto: CreateEventDto , @UploadedFile() file: Express.Multer.File) {
-    return this.eventService.create(createEventDto,req.user, file);
+  create(@Req() req, @Body() createEventDto: CreateEventDto, @UploadedFile() file: Express.Multer.File) {
+    return this.eventService.create(createEventDto, req.user, file);
   }
 
   @Get()
-  findAll() {
-    return this.eventService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req) {
+    return this.eventService.findAll(req.user);
   }
 
   @Get(':id')
