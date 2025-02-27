@@ -53,12 +53,23 @@ export class EventService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} event`;
+  async findOne(id: string) {
+    try {
+      const event = await this.eventModel.findById(id)
+      return event
+    } catch (error) {
+      return error
+    }
   }
 
-  update(id: number, updateEventDto: UpdateEventDto) {
-    return `This action updates a #${id} event`;
+  async update(id: string, updateEventDto: UpdateEventDto) {
+    try {
+      const updatEvent = await this.eventModel.findByIdAndUpdate(id, { ...updateEventDto }, { new: true })
+      return updatEvent
+    } catch (error) {
+      return error
+
+    }
   }
 
   remove(id: number) {
