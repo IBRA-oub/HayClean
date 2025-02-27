@@ -60,5 +60,15 @@ export class EventController {
     return this.eventService.cancelParticipation(req.user,id);
   }
 
+  @Patch('accepteParticipant/:id')
+  accepteParticipant(@Param('id') id: string , @Body() body: { email: string }) {
+    return this.eventService.accepteParticipant(id,body.email);
+  }
+
+  @Patch('rajecteParticipant/:id')
+  rajecteParticipant(@Param('id') id: string , @Body() body: { email: string }) {
+    return this.eventService.rajecteParticipant(id,body.email);
+  }
+
   
 }
