@@ -135,7 +135,7 @@ export class EventService {
 
   async pendingParticipantCitizen(user: citizenProp) {
     try {
-      
+
       const events = await this.eventModel.find({
         "participants": {
           $elemMatch: {
@@ -144,16 +144,16 @@ export class EventService {
           }
         }
       });
-  
-      
+
+
       const filteredEvents = events.map(event => ({
         ...event.toObject(),
-        participants: event.participants.filter(participant => 
+        participants: event.participants.filter(participant =>
           participant.status === "pending" && participant.email === user.email
         )
       }));
-  
-      return  filteredEvents ;
+
+      return filteredEvents;
     } catch (error) {
       return { message: "Error fetching events", status: 500, error: error.message };
     }
@@ -161,23 +161,70 @@ export class EventService {
 
   async cancelParticipation(user: citizenProp, eventId: string) {
     try {
-      
+
       const updatedEvent = await this.eventModel.findByIdAndUpdate(
         eventId,
-        { $pull: { participants: { email: user.email } } }, 
-        { new: true } 
+        { $pull: { participants: { email: user.email } } },
+        { new: true }
       );
-  
+
       if (!updatedEvent) {
         return { message: "Event not found or participant not found", status: 404 };
       }
-  
+
       return { message: "Participation successfully canceled", status: 200, event: updatedEvent };
     } catch (error) {
       return { message: "Error canceling participation", status: 500, error: error.message };
     }
   }
-  
-  
+
+  async accepteParticipant(eventId: string, userEmail: string) {
+    try {
+
+      const updatedEvent = await this.eventModel.findOneAndUpdate(
+        { _id:eventId, "participants.email": userEmail },
+        {
+          $set: {
+            "participants.$.status": "accepted",
+          },
+        },
+        { new: true }
+      );
+    
+      if (!updatedEvent) {
+        return { message: "Event or participant not found", status: 404 };
+      }
+
+
+      return { message: 'participation accepted successufuly ', status: 200, updatedEvent };
+    } catch (error) {
+      return { message: "Error fetching events", status: 500, error: error.message };
+    }
+  }
+  async rajecteParticipant(eventId: string, userEmail: string) {
+    try {
+
+      const updatedEvent = await this.eventModel.findOneAndUpdate(
+        { _id:eventId, "participants.email": userEmail },
+        {
+          $set: {
+            "participants.$.status": "rejected",
+          },
+        },
+        { new: true }
+      );
+    
+      if (!updatedEvent) {
+        return { message: "Event or participant not found", status: 404 };
+      }
+
+
+      return { message: 'participation rejected successufuly ', status: 200, updatedEvent };
+    } catch (error) {
+      return { message: "Error fetching events", status: 500, error: error.message };
+    }
+  }
+
+
 
 }
