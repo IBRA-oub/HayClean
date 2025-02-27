@@ -22,6 +22,12 @@ export class EventController {
     return this.eventService.findAll(req.user);
   }
 
+  @Get('pendingParticipant')
+  @UseGuards(JwtAuthGuard)
+  pendingParticipant(@Req() req) {
+    return this.eventService.pendingParticipant(req.user);
+  }
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.eventService.findOne(id);
@@ -36,4 +42,12 @@ export class EventController {
   remove(@Param('id') id: string) {
     return this.eventService.remove(id);
   }
+
+  @Patch('participant/:id')
+  @UseGuards(JwtAuthGuard)
+  participant(@Req() req,@Param('id') id: string) {
+    return this.eventService.participant(req.user,id);
+  }
+
+  
 }
