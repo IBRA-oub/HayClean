@@ -22,6 +22,18 @@ export class EventController {
     return this.eventService.findAll(req.user);
   }
 
+  @Get('pendingParticipant')
+  @UseGuards(JwtAuthGuard)
+  pendingParticipant(@Req() req) {
+    return this.eventService.pendingParticipant(req.user);
+  }
+
+  @Get('pendingParticipantCitizen')
+  @UseGuards(JwtAuthGuard)
+  pendingParticipantCitizen(@Req() req) {
+    return this.eventService.pendingParticipantCitizen(req.user);
+  }
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.eventService.findOne(id);
@@ -36,4 +48,17 @@ export class EventController {
   remove(@Param('id') id: string) {
     return this.eventService.remove(id);
   }
+
+  @Patch('participation/:id')
+  @UseGuards(JwtAuthGuard)
+  participation(@Req() req,@Param('id') id: string) {
+    return this.eventService.participation(req.user,id);
+  }
+  @Patch('cancelParticipation/:id')
+  @UseGuards(JwtAuthGuard)
+  cancelParticipation(@Req() req,@Param('id') id: string) {
+    return this.eventService.cancelParticipation(req.user,id);
+  }
+
+  
 }
