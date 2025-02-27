@@ -65,14 +65,19 @@ export class EventService {
   async update(id: string, updateEventDto: UpdateEventDto) {
     try {
       const updatEvent = await this.eventModel.findByIdAndUpdate(id, { ...updateEventDto }, { new: true })
-      return updatEvent
+      return { message: 'event update successufuly', status:200 , updatEvent }
     } catch (error) {
       return error
 
     }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} event`;
+  async remove(id: string) {
+    try {
+      const deletEvent = await this.eventModel.findByIdAndDelete(id)
+      return { message: 'event deleted successufuly', status:200 , deletEvent }
+    } catch (error) {
+      return error
+    }
   }
 }
