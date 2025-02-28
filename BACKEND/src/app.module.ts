@@ -9,12 +9,13 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ReportModule } from './report/report.module';
 import { EventModule } from './event/event.module';
+import { NewsModule } from './news/news.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({envFilePath:'.env' , isGlobal:true}),
     MongooseModule.forRoot(process.env.MONGODB_URI),
-    UserModule, CitizenModule, MunicipalityModule, AdministrationModule, ReportModule, EventModule],
+    UserModule, CitizenModule, MunicipalityModule, AdministrationModule, ReportModule, EventModule, NewsModule],
   controllers: [AppController],
   providers: [AppService],
 })
