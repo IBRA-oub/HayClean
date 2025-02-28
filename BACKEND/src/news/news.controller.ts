@@ -7,18 +7,19 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('news')
 export class NewsController {
-  constructor(private readonly newsService: NewsService) {}
+  constructor(private readonly newsService: NewsService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('image'))
-  create(@Req() req,@Body() createNewsDto: CreateNewsDto , @UploadedFile() file: Express.Multer.File) {
-    return this.newsService.create(createNewsDto,req.user,file);
+  create(@Req() req, @Body() createNewsDto: CreateNewsDto, @UploadedFile() file: Express.Multer.File) {
+    return this.newsService.create(createNewsDto, req.user, file);
   }
 
   @Get()
-  findAll() {
-    return this.newsService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req) {
+    return this.newsService.findAll(req.user);
   }
 
   @Get(':id')

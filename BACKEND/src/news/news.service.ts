@@ -33,8 +33,18 @@ export class NewsService {
     }
   }
 
-  findAll() {
-    return `This action returns all news`;
+  async findAll(user: municipalityProp) {
+
+    try {
+      const allNews = await this.newsModel.find({ city: user.city })
+      if (allNews.length < 0) {
+        return { message: 'no news available' }
+      }
+      return allNews
+    } catch (error) {
+      return error
+    }
+
   }
 
   findOne(id: number) {
