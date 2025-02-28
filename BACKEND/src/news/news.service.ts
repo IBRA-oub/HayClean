@@ -59,8 +59,18 @@ export class NewsService {
     }
   }
 
-  update(id: number, updateNewsDto: UpdateNewsDto) {
-    return `This action updates a #${id} news`;
+  async update(id: string, updateNewsDto: UpdateNewsDto, file?: Express.Multer.File) {
+    // let updateData = {...updateNewsDto}
+    let imageUrl : string;
+    if(file){
+      imageUrl = await this.uploadImage(file);
+    }
+    try {
+      const updateNews = await this.newsModel.findByIdAndUpdate(id, { ...updateNewsDto, image: imageUrl }, { new: true })
+      return { message: 'news update successfuly', status: 200, updateNews }
+    } catch (error) {
+      return error
+    }
   }
 
   async remove(id: string) {
