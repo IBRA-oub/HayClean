@@ -1,0 +1,96 @@
+import { Injectable } from '@nestjs/common';
+import { CreateNewsDto } from './dto/create-news.dto';
+import { UpdateNewsDto } from './dto/update-news.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { News } from './entities/news.entity';
+import { Model } from 'mongoose';
+import { MinioService } from 'src/services/minio';
+import { municipalityProp } from 'src/types/loginType';
+
+@Injectable()
+export class NewsService {
+  constructor(
+    @InjectModel(News.name) private newsModel: Model<News>,
+    private minioService: MinioService
+  ) { }
+  async create(createNewsDto: CreateNewsDto, user: municipalityProp, file?: Express.Multer.File) {
+    try {
+      let imageUrl = file ? await this.uploadImage(file) : null;
+
+      const newsData = {
+        image: imageUrl,
+        city: user.city,
+        ...createNewsDto,
+
+      }
+
+      const newNews = await this.newsModel.create(newsData);
+
+      return { message: 'News created successfuly', status: 200, newNews }
+
+    } catch (error) {
+      return error
+    }
+  }
+
+  async findAll(user: municipalityProp) {
+
+    try {
+      const allNews = await this.newsModel.find({ city: user.city })
+      if (allNews.length < 0) {
+        return { message: 'no news available' }
+      }
+      return allNews
+    } catch (error) {
+      return error
+    }
+
+  }
+
+  async findOne(id: string) {
+    try {
+      const news = await this.newsModel.findById(id)
+      if (!news) {
+        return { message: 'news not found' }
+      }
+      return news
+    } catch (error) {
+      return error
+    }
+  }
+
+  async update(id: string, updateNewsDto: UpdateNewsDto, file?: Express.Multer.File) {
+    // let updateData = {...updateNewsDto}
+    let imageUrl : string;
+    if(file){
+      imageUrl = await this.uploadImage(file);
+    }
+    try {
+      const updateNews = await this.newsModel.findByIdAndUpdate(id, { ...updateNewsDto, image: imageUrl }, { new: true })
+      return { message: 'news update successfuly', status: 200, updateNews }
+    } catch (error) {
+      return error
+    }
+  }
+
+  async remove(id: string) {
+    try {
+      const deleteNews = await this.newsModel.findByIdAndDelete(id)
+
+      if (deleteNews) {
+        return { message: 'news deleted successfuly ', status: 200, deleteNews }
+      }
+    } catch (error) {
+      return error
+    }
+
+  }
+
+  private async uploadImage(file: Express.Multer.File) {
+    return await this.minioService.uploadImage({
+      buffer: file.buffer,
+      originalname: file.originalname,
+      mimetype: file.mimetype,
+    });
+  }
+}
