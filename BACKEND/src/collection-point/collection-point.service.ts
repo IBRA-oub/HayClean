@@ -9,41 +9,44 @@ import { Model } from 'mongoose';
 @Injectable()
 export class CollectionPointService {
   constructor(
-    @InjectModel(CollectionPoint.name) private collectionPointModel : Model<CollectionPoint>
-  ){}
-  async create(createCollectionPointDto: CreateCollectionPointDto,user : municipalityProp) {
+    @InjectModel(CollectionPoint.name) private collectionPointModel: Model<CollectionPoint>
+  ) { }
+  async create(createCollectionPointDto: CreateCollectionPointDto, user: municipalityProp) {
     try {
-      const newCollePoint = await this.collectionPointModel.create({...createCollectionPointDto , city : user.city})
+      const newCollePoint = await this.collectionPointModel.create({ ...createCollectionPointDto, city: user.city })
 
-      return{ message : 'collection point create successfuly' , status: 200 , newCollePoint}
+      return { message: 'collection point create successfuly', status: 200, newCollePoint }
     } catch (error) {
       return error
     }
   }
 
-  async findAll(user : municipalityProp) {
-    const allCollPoint = await this.collectionPointModel.find({city : user.city})
-    if(allCollPoint.length < 0){
-      return {message:'no collection point available'}
+  async findAll(user: municipalityProp) {
+    const allCollPoint = await this.collectionPointModel.find({ city: user.city })
+    if (allCollPoint.length < 0) {
+      return { message: 'no collection point available' }
     }
 
     return allCollPoint;
   }
 
   async findOne(id: string) {
-      const collPoint = await this.collectionPointModel.findById(id)
-      if(!collPoint){
-        return {message:'collection point not found'}
-      }
+    const collPoint = await this.collectionPointModel.findById(id)
+    if (!collPoint) {
+      return { message: 'collection point not found' }
+    }
 
-      return collPoint
+    return collPoint
   }
 
   update(id: number, updateCollectionPointDto: UpdateCollectionPointDto) {
     return `This action updates a #${id} collectionPoint`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} collectionPoint`;
+  async remove(id: string) {
+    const deleteCollPoint = await this.collectionPointModel.findByIdAndDelete(id)
+    if (deleteCollPoint) {
+      return { message: 'collection point deleted successfuly', status: 200 }
+    }
   }
 }

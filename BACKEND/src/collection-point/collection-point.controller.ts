@@ -32,6 +32,6 @@ export class CollectionPointController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.collectionPointService.remove(+id);
+    return this.collectionPointService.remove(id);
   }
 }
