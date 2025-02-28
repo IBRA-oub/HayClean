@@ -39,8 +39,12 @@ export class CollectionPointService {
     return collPoint
   }
 
-  update(id: number, updateCollectionPointDto: UpdateCollectionPointDto) {
-    return `This action updates a #${id} collectionPoint`;
+  async update(id: string, updateCollectionPointDto: UpdateCollectionPointDto) {
+    const updateCollPoint = await this.collectionPointModel.findByIdAndUpdate(id, {...updateCollectionPointDto }, { new: true })
+    if (!updateCollPoint) {
+      return { message: 'can\'update', status: 400 }
+    }
+    return { message: 'update successfuly', status: 200, updateCollPoint }
   }
 
   async remove(id: string) {

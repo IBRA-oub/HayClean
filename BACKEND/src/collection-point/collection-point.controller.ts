@@ -27,7 +27,7 @@ export class CollectionPointController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCollectionPointDto: UpdateCollectionPointDto) {
-    return this.collectionPointService.update(+id, updateCollectionPointDto);
+    return this.collectionPointService.update(id, updateCollectionPointDto);
   }
 
   @Delete(':id')
