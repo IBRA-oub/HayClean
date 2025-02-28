@@ -22,7 +22,7 @@ export class CollectionPointController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.collectionPointService.findOne(+id);
+    return this.collectionPointService.findOne(id);
   }
 
   @Patch(':id')

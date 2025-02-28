@@ -23,11 +23,20 @@ export class CollectionPointService {
 
   async findAll(user : municipalityProp) {
     const allCollPoint = await this.collectionPointModel.find({city : user.city})
+    if(allCollPoint.length < 0){
+      return {message:'no collection point available'}
+    }
+
     return allCollPoint;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} collectionPoint`;
+  async findOne(id: string) {
+      const collPoint = await this.collectionPointModel.findById(id)
+      if(!collPoint){
+        return {message:'collection point not found'}
+      }
+
+      return collPoint
   }
 
   update(id: number, updateCollectionPointDto: UpdateCollectionPointDto) {
