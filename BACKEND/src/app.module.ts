@@ -10,12 +10,13 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ReportModule } from './report/report.module';
 import { EventModule } from './event/event.module';
 import { NewsModule } from './news/news.module';
+import { CollectionPointModule } from './collection-point/collection-point.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({envFilePath:'.env' , isGlobal:true}),
     MongooseModule.forRoot(process.env.MONGODB_URI),
-    UserModule, CitizenModule, MunicipalityModule, AdministrationModule, ReportModule, EventModule, NewsModule],
+    UserModule, CitizenModule, MunicipalityModule, AdministrationModule, ReportModule, EventModule, NewsModule, CollectionPointModule],
   controllers: [AppController],
   providers: [AppService],
 })
