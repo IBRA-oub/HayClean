@@ -15,8 +15,9 @@ export class CollectionPointController {
   }
 
   @Get()
-  findAll() {
-    return this.collectionPointService.findAll();
+  @UseGuards(JwtAuthGuard)
+  findAll(@Req() req) {
+    return this.collectionPointService.findAll(req.user);
   }
 
   @Get(':id')

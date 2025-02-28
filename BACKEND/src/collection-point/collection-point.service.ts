@@ -21,8 +21,9 @@ export class CollectionPointService {
     }
   }
 
-  findAll() {
-    return `This action returns all collectionPoint`;
+  async findAll(user : municipalityProp) {
+    const allCollPoint = await this.collectionPointModel.find({city : user.city})
+    return allCollPoint;
   }
 
   findOne(id: number) {
