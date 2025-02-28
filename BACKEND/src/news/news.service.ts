@@ -47,16 +47,33 @@ export class NewsService {
 
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} news`;
+  async findOne(id: string) {
+    try {
+      const news = await this.newsModel.findById(id)
+      if (!news) {
+        return { message: 'news not found' }
+      }
+      return news
+    } catch (error) {
+      return error
+    }
   }
 
   update(id: number, updateNewsDto: UpdateNewsDto) {
     return `This action updates a #${id} news`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} news`;
+  async remove(id: string) {
+    try {
+      const deleteNews = await this.newsModel.findByIdAndDelete(id)
+
+      if (deleteNews) {
+        return { message: 'news deleted successfuly ', status: 200, deleteNews }
+      }
+    } catch (error) {
+      return error
+    }
+
   }
 
   private async uploadImage(file: Express.Multer.File) {

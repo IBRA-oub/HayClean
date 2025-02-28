@@ -24,7 +24,7 @@ export class NewsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.newsService.findOne(+id);
+    return this.newsService.findOne(id);
   }
 
   @Patch(':id')
@@ -34,6 +34,6 @@ export class NewsController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.newsService.remove(+id);
+    return this.newsService.remove(id);
   }
 }
