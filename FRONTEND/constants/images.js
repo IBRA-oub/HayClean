@@ -6,5 +6,10 @@ import takePhoto from '../assets/images/takePhoto.png'
 import reportDumps from '../assets/images/reportDumps.png'
 import citizens from '../assets/images/citizens.png'
 import municipality from '../assets/images/Municipality.png'
+import homeBg from '../assets/images/homeBg.png'
+import sadIcon from '../assets/images/sadIcon.png'
+import mohmadiaDumps from '../assets/images/mohmadiaDumps.jpg'
+import rabatDumps from '../assets/images/rabatDumps.png'
+import ramassage1 from '../assets/images/ramassage1.jpg'
 
-export default {hayClean,truck,background,map,reportDumps,takePhoto,citizens,municipality}
+export default {hayClean,truck,background,map,reportDumps,takePhoto,citizens,ramassage1,municipality,homeBg,sadIcon,rabatDumps,mohmadiaDumps}

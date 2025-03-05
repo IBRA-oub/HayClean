@@ -4,8 +4,10 @@ import {
     ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View 
 } from 'react-native';
 import images from '../../constants/images';
+import { useRouter } from 'expo-router';
 
 const MailVerification = () => {
+    const router = useRouter()
     const [code, setCode] = useState(['', '', '', '']);
     const inputs = useRef([]);
 
@@ -26,6 +28,7 @@ const MailVerification = () => {
         const enteredCode = code.join('');
         console.log('Code saisi:', enteredCode);
         // verificatoin
+        router.push('home')
     };
 
     return (

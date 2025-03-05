@@ -8,6 +8,8 @@ const _layout = () => {
             <Stack>
                 <Stack.Screen name='index' options={{ headerShown: false }} />
                 <Stack.Screen name='(auth)' options={{ headerShown: false }} />
+                <Stack.Screen name='(citizenTabs)' options={{ headerShown: false }} />
+                <Stack.Screen name='(allPages)' options={{ headerShown: false }} />
             </Stack>
         </ProviderFunction>
     )
