@@ -27,6 +27,7 @@ const home = () => {
           />
         }
         style={styles.scrollContainer}
+        contentContainerStyle={{ paddingBottom: 50 }}
       >
 
         <View>
