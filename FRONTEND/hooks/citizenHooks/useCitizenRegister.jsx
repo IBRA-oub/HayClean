@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'expo-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCities, fetchCities } from '../redux/features/citySlice';
-import { CitiesSelectors } from '../redux/selectors/citySelector';
-import { ValidateCitizenRegister } from '../utils/ValidateCitizenRegister';
+import { clearCities, fetchCities } from '../../redux/features/citySlice';
+import { CitiesSelectors } from '../../redux/selectors/citySelector';
+import { ValidateCitizenRegister } from '../../utils/ValidateCitizenRegister';
 
 const useCitizenRegister = () => {
     const router = useRouter();
