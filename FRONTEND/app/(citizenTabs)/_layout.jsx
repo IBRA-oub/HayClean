@@ -83,7 +83,7 @@ const TabsLayouts = () => {
             <View style={styles.scanContainer}>
                 <TouchableOpacity
                     style={styles.scanButton}
-                    // onPress={() => router.push('/citizen/scan')}
+                    onPress={() => router.push('reportDump')}
                 >
                     <View style={styles.scanCircle}>
                         <MaterialCommunityIcons name="cube-scan" size={40} color="white" />

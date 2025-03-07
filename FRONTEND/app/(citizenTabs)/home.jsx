@@ -5,9 +5,11 @@ import images from '../../constants/images';
 import NearestDumps from '../../components/citizenComponents/NearestDumps';
 import CollectionPoint from '../../components/citizenComponents/CollectionPoint';
 import NewsUpdate from '../../components/citizenComponents/NewsUpdate';
+import { useRouter } from 'expo-router';
 
 const home = () => {
   const [refreshing, setRefreshing] = useState(false);
+  const router = useRouter()
   const onRefresh = () => {
     setRefreshing(true);
     setTimeout(() => {
@@ -33,7 +35,7 @@ const home = () => {
             source={images.homeBg}
           >
             <View style={styles.shadowView}  >
-              <TouchableOpacity style={styles.reportButton}>
+              <TouchableOpacity style={styles.reportButton} onPress={() => router.push('reportDump')}>
                 <Text style={styles.illegalText}>
                   REPORT ILLEGAL DUMP
                 </Text>

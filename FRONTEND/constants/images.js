@@ -11,5 +11,26 @@ import sadIcon from '../assets/images/sadIcon.png'
 import mohmadiaDumps from '../assets/images/mohmadiaDumps.jpg'
 import rabatDumps from '../assets/images/rabatDumps.png'
 import ramassage1 from '../assets/images/ramassage1.jpg'
+import animalCarcass from '../assets/images/animalCarcass.jpg'
+import bag from '../assets/images/bag.png'
+import construction from '../assets/images/construction.png'
+import dangerous from '../assets/images/dangerous.jpg'
+import electronic from '../assets/images/electronic.png'
+import glass from '../assets/images/glass.png'
+import liquid from '../assets/images/liquid.png'
+import metal from '../assets/images/metal.png'
+import organic from '../assets/images/organic.png'
+import plastic from '../assets/images/plastic.png'
+import tire from '../assets/images/tire.png'
+import truckIcon from '../assets/images/truckIcon.png'
+import wheelbarrow from '../assets/images/wheelbarrow.png'
+import wood from '../assets/images/wood.png'
 
-export default {hayClean,truck,background,map,reportDumps,takePhoto,citizens,ramassage1,municipality,homeBg,sadIcon,rabatDumps,mohmadiaDumps}
+export default {
+    hayClean, truck, background, map, reportDumps,
+    takePhoto, citizens, ramassage1, municipality,
+    homeBg, sadIcon, rabatDumps, mohmadiaDumps, animalCarcass,
+    bag,construction,dangerous,electronic,glass,liquid,metal,
+    organic,plastic,tire,truckIcon,wheelbarrow,wood
+
+}

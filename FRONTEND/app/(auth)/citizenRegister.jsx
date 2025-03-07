@@ -7,7 +7,8 @@ import { useRouter } from 'expo-router';
 import FormField from '../../components/authComponents/FormField';
 import AutocompleteInput from "react-native-autocomplete-input";
 import { clearCities} from '../../redux/features/citySlice';
-import useCitizenRegister from '../../hooks/useCitizenRegister';
+import useCitizenRegister from '../../hooks/citizenHooks/useCitizenRegister';
+
 
 const citizenRegister = () => {
     const {form, setForm, query, setQuery, cityList, isFocused, setIsFocused,hasError, getError, handleSubmit,dispatch} = useCitizenRegister();

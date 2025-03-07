@@ -9,6 +9,7 @@ const _layout = () => {
       <StatusBar style="dark-content" />
       <Stack>
         <Stack.Screen name="collectionPoints" options={{ headerShown: false }} />
+        <Stack.Screen name="reportDump" options={{ headerShown: false }} />
       </Stack>
     </>
   )
