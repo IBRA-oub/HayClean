@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import images from '../../constants/images';
+import Fontisto from '@expo/vector-icons/Fontisto';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const EventCard = () => {
   return (
@@ -25,10 +27,10 @@ const EventCard = () => {
 
       <View style={styles.dateTimeContainer}>
         <Text style={styles.date}>
-          <Text style={styles.bold}>Date:</Text> 09/02/2024
+          <Text style={styles.bold}><Fontisto name="date" size={15}  color="gray" /> </Text> 09/02/2024
         </Text>
         <Text style={styles.time}>
-          <Text style={styles.bold}>Time:</Text> 10:00 AM
+          <Text style={styles.bold}><AntDesign name="clockcircleo" size={15} color="gray" /> </Text> 10:00 AM
         </Text>
       </View>
 
@@ -43,6 +45,7 @@ export default EventCard;
 
 const styles = StyleSheet.create({
   card: {
+    width:'95%',
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 15,
