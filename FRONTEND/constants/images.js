@@ -25,12 +25,13 @@ import tire from '../assets/images/tire.png'
 import truckIcon from '../assets/images/truckIcon.png'
 import wheelbarrow from '../assets/images/wheelbarrow.png'
 import wood from '../assets/images/wood.png'
+import user from '../assets/images/user.png'
 
 export default {
     hayClean, truck, background, map, reportDumps,
     takePhoto, citizens, ramassage1, municipality,
     homeBg, sadIcon, rabatDumps, mohmadiaDumps, animalCarcass,
-    bag,construction,dangerous,electronic,glass,liquid,metal,
-    organic,plastic,tire,truckIcon,wheelbarrow,wood
+    bag, construction, dangerous, electronic, glass, liquid, metal,
+    organic, plastic, tire, truckIcon, wheelbarrow, wood,user
 
 }

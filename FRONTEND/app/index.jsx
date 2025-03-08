@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
+import { Platform } from 'react-native';
 import { View, ImageBackground, StyleSheet, Text, Dimensions } from 'react-native';
 import { PanGestureHandler, GestureHandlerRootView } from 'react-native-gesture-handler';
 import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-native-reanimated';
 import images from '../constants/images';
 import Features from '../components/indexComponents/Features';
 import Role from '../components/indexComponents/Role';
-import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
 const SwipeScreen = () => {
-  const router = useRouter()
   const [showRole, setShowRole] = useState(false); 
   const onSkip = () => {
-    router.push('home')
     setShowRole(true); 
   };
   // Animation
