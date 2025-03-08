@@ -21,7 +21,7 @@ const useLogin = () => {
                 console.error("Error during login:", error);
             } finally {
                 resetForm();
-                setForm({ firstName: "", lastName: "", city: "", phoneNumber: "", email: "", password: "" });
+                setForm({email: "", password: "" });
             }
         }
     }
