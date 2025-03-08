@@ -5,9 +5,8 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
-const TabsLayouts = () => {
+const _layout = () => {
     const router = useRouter(); 
 
     return (
@@ -32,7 +31,7 @@ const TabsLayouts = () => {
                 }}
             >
                 <Tabs.Screen
-                    name='home'
+                    name='muniHome'
                     options={{
                         title: 'Home',
                         headerShown: false,
@@ -42,12 +41,12 @@ const TabsLayouts = () => {
                     }}
                 />
                 <Tabs.Screen
-                    name='info'
+                    name='muniInfo'
                     options={{
                         title: 'Info',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View style={{ marginRight: 50, width: 40 }}>
+                            <View>
                                 <FontAwesome name="newspaper-o" size={focused ? 27 : 24} color={color} />
                             </View>
                         ),
@@ -55,12 +54,12 @@ const TabsLayouts = () => {
                 />
 
                 <Tabs.Screen
-                    name='notification'
+                    name='muniNotification'
                     options={{
                         title: 'Notification',
                         headerShown: false,
                         tabBarIcon: ({ color, focused }) => (
-                            <View style={{ marginLeft: 50, width: 40 }}>
+                            <View>
                                 <Ionicons name="notifications-outline" size={focused ? 30 : 24} color={color} />
                             </View>
                         ),
@@ -68,7 +67,7 @@ const TabsLayouts = () => {
                 />
 
                 <Tabs.Screen
-                    name='profile'
+                    name='muniProfile'
                     options={{
                         title: 'Profile',
                         headerShown: false,
@@ -79,44 +78,10 @@ const TabsLayouts = () => {
                 />
             </Tabs>
 
-            {/* picture button*/}
-            <View style={styles.scanContainer}>
-                <TouchableOpacity
-                    style={styles.scanButton}
-                    onPress={() => router.push('reportDump')}
-                >
-                    <View style={styles.scanCircle}>
-                        <MaterialCommunityIcons name="cube-scan" size={40} color="white" />
-                    </View>
-                </TouchableOpacity>
-            </View>
         </>
     );
 };
 
-export default TabsLayouts;
+export default _layout;
 
-const styles = StyleSheet.create({
-    scanContainer: {
-        position: 'absolute',
-        bottom: 20,
-        left: '49%',
-        transform: [{ translateX: -32 }],
-        zIndex: 10,
-    },
-    scanButton: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    scanCircle: {
-        width: 80,
-        height: 80,
-        borderRadius: 50,
-        backgroundColor: '#12B961',
-        justifyContent: 'center',
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 5 },
-    },
-});
+const styles = StyleSheet.create({});

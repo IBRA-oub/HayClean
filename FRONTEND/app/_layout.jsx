@@ -10,6 +10,7 @@ const _layout = () => {
                 <Stack.Screen name='(auth)' options={{ headerShown: false }} />
                 <Stack.Screen name='(citizenTabs)' options={{ headerShown: false }} />
                 <Stack.Screen name='(allPages)' options={{ headerShown: false }} />
+                <Stack.Screen name='(municipalityTabs)' options={{ headerShown: false }} />
             </Stack>
         </ProviderFunction>
     )

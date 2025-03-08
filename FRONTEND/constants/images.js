@@ -26,12 +26,13 @@ import truckIcon from '../assets/images/truckIcon.png'
 import wheelbarrow from '../assets/images/wheelbarrow.png'
 import wood from '../assets/images/wood.png'
 import user from '../assets/images/user.png'
+import addMap from '../assets/images/addMap.png'
 
 export default {
     hayClean, truck, background, map, reportDumps,
     takePhoto, citizens, ramassage1, municipality,
     homeBg, sadIcon, rabatDumps, mohmadiaDumps, animalCarcass,
     bag, construction, dangerous, electronic, glass, liquid, metal,
-    organic, plastic, tire, truckIcon, wheelbarrow, wood,user
+    organic, plastic, tire, truckIcon, wheelbarrow, wood,user,addMap
 
 }
