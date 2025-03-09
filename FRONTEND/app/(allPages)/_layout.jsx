@@ -11,6 +11,8 @@ const _layout = () => {
         <Stack.Screen name="collectionPoints" options={{ headerShown: false }} />
         <Stack.Screen name="reportDump" options={{ headerShown: false }} />
         <Stack.Screen name="collectionPointsMang" options={{ headerShown: false }} />
+        <Stack.Screen name="allReport" options={{ headerShown: false }} />
+        <Stack.Screen name="reportDetails" options={{ headerShown: false }} />
       </Stack>
     </>
   )
