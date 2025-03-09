@@ -2,7 +2,9 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import images from '../../constants/images';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useRouter } from 'expo-router';
 const ReportCard = () => {
+    const router = useRouter()
     return (
         <View style={styles.card}>
             <Image
@@ -17,7 +19,7 @@ const ReportCard = () => {
                     Take action now to keep the city clean!
                 </Text>
             </View>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={()=> router.push('reportDetails')}>
                 <AntDesign name="rightcircle" size={34} color="green" />
             </TouchableOpacity>
         </View>
