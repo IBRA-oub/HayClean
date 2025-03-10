@@ -20,7 +20,7 @@ const ReportCard = () => {
                 </Text>
             </View>
             <TouchableOpacity style={styles.button} onPress={()=> router.push('reportDetails')}>
-                <AntDesign name="rightcircle" size={34} color="green" />
+                <AntDesign name="rightcircle" size={34} color="#12B961" />
             </TouchableOpacity>
         </View>
     );
