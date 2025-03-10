@@ -6,8 +6,12 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Line from '../../components/citizenComponents/Line';
 import Entypo from '@expo/vector-icons/Entypo';
+import useCitizenProfile from '../../hooks/citizenHooks/useCitizenProfile';
+import EditeProfile from '../../components/citizenComponents/EditeProfile';
+
 
 const profile = () => {
+  const { isModalVisible, userData, setModalVisible, handleDelete, handleLogout, handleEditSubmit } = useCitizenProfile();
   return (
     <View style={styles.container}>
       <View style={styles.headerStyle}>
@@ -23,30 +27,30 @@ const profile = () => {
           </View>
         </ImageBackground>
         <View style={styles.infoContainer}>
-          <Text style={styles.userNameText}>Brahim Oubourrih</Text>
+          <Text style={styles.userNameText}>{userData.firstName} {userData.lastName}</Text>
           <View style={styles.persoConstiner}>
             <View style={styles.emailConatiner}>
               <AntDesign name="idcard" size={20} color="black" />
-              <Text style={{ textAlign: 'center' }}> brahimoubourrih@gmail.com</Text>
+              <Text style={{ textAlign: 'center' }}> {userData.email}</Text>
             </View>
             <View style={styles.cityConatiner}>
               <MaterialCommunityIcons name="home-city" size={20} color="black" />
-              <Text style={{ textAlign: 'center' }} >Agadir , MA </Text>
+              <Text style={{ textAlign: 'center' }} >{userData.city} , MA </Text>
             </View>
 
           </View>
         </View>
         <Line />
         <View style={styles.buttonConatiner}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleDelete}>
             <MaterialIcons name="delete-sweep" size={24} color="red" />
             <Text style={{ color: 'red' }}>Delete</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={() => setModalVisible(true)}>
             <AntDesign name="edit" size={24} color="green" />
             <Text style={{ color: 'green' }}>Edite</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
             <Entypo name="log-out" size={24} color="gray" />
             <Text style={{ color: 'gray' }}>LogOut</Text>
 
@@ -56,7 +60,7 @@ const profile = () => {
 
         <View style={styles.thanksContainer}>
           <View style={styles.contentContainer}>
-            <Text style={{textAlign:'center',width:'80%',fontSize:16}}>
+            <Text style={{ textAlign: 'center', width: '80%', fontSize: 16 }}>
               By downloading this application, you acknowledge your responsibility in keeping your environment clean and understand the dangers of waste. ♻️🚮{'\n'}
               {'\n'}Improper waste disposal harms nature, wildlife, and public health. Together, we can make a difference! 🌍💚{'\n'}
               {'\n'}Invite your friends to join and help build a larger community for a cleaner future! 🤝✨
@@ -66,6 +70,8 @@ const profile = () => {
         </View>
 
       </View>
+
+      <EditeProfile visible={isModalVisible} onClose={() => setModalVisible(false)} onSubmit={handleEditSubmit} userData={userData} />
 
     </View>
   )
