@@ -5,15 +5,15 @@ import Animated, { useSharedValue, useAnimatedStyle, withSpring } from 'react-na
 import images from '../constants/images';
 import Features from '../components/indexComponents/Features';
 import Role from '../components/indexComponents/Role';
-import { useRouter } from 'expo-router';
+// import { useRouter } from 'expo-router';
 
 const { width } = Dimensions.get('window');
 
 const SwipeScreen = () => {
-  const router = useRouter()
+  // const router = useRouter()
   const [showRole, setShowRole] = useState(false); 
   const onSkip = () => {
-    router.push('muniHome')
+    // router.push('muniHome')
     setShowRole(true); 
   };
   // Animation
