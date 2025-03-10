@@ -4,11 +4,17 @@ import { Ionicons } from '@expo/vector-icons';
 import images from '../../constants/images';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useRouter } from 'expo-router';
+import useDeleteEvent from '../../hooks/municipalityHooks/useDeleteEvent';
 
 const EventCard = () => {
+  const router = useRouter()
+  const { handleDelete } = useDeleteEvent();
+  const role = 'municipality'
   return (
     <View style={styles.card}>
-    
+
       <View style={styles.header}>
         <Text style={styles.title}>Municipality Casa-Blanca</Text>
         <View style={styles.location}>
@@ -17,26 +23,38 @@ const EventCard = () => {
         </View>
       </View>
 
-     
       <Image source={images.ramassage1} style={styles.image} />
 
-    
       <Text style={styles.description}>
         Join us for a day of action and community spirit!
       </Text>
 
       <View style={styles.dateTimeContainer}>
         <Text style={styles.date}>
-          <Text style={styles.bold}><Fontisto name="date" size={15}  color="gray" /> </Text> 09/02/2024
+          <Text style={styles.bold}><Fontisto name="date" size={15} color="gray" /> </Text> 09/02/2024
         </Text>
         <Text style={styles.time}>
           <Text style={styles.bold}><AntDesign name="clockcircleo" size={15} color="gray" /> </Text> 10:00 AM
         </Text>
       </View>
 
-      <TouchableOpacity style={styles.joinButton}>
-        <Text style={styles.joinButtonText}>Participate</Text>
-      </TouchableOpacity>
+      {role === 'municipality' ? (
+        <View style={styles.actions}>
+          <TouchableOpacity style={styles.deleteIcon}  onPress={handleDelete}>
+            <FontAwesome name="trash" size={20} color="white" />
+            <Text style={styles.deleteText}> Delete</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.editeIcon} onPress={() => router.push('editeEvent')}>
+            <FontAwesome name="edit" size={20} color="white" />
+            <Text style={styles.editeText}>Edite</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <TouchableOpacity style={styles.joinButton}>
+          <Text style={styles.joinButtonText}>Participate</Text>
+        </TouchableOpacity>
+      )}
+
     </View>
   );
 };
@@ -45,7 +63,7 @@ export default EventCard;
 
 const styles = StyleSheet.create({
   card: {
-    width:'95%',
+    width: '95%',
     backgroundColor: 'white',
     borderRadius: 10,
     padding: 15,
@@ -111,4 +129,41 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  actions: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
+  deleteIcon: {
+    marginHorizontal: 10,
+    width: '45%',
+    height: 30,
+    overflow: 'hidden',
+    borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'red'
+  },
+  editeIcon: {
+    marginHorizontal: 10,
+    width: '45%',
+    height: 30,
+    overflow: 'hidden',
+    borderRadius: 5,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'green'
+  },
+  deleteText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  editeText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '500'
+  }
 });

@@ -1,8 +1,14 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import images from '../../constants/images';
+import { FontAwesome } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import useDeleteNews from '../../hooks/municipalityHooks/useDeleteNews';
 
-const NewCard = ({ item }) => {
+
+const NewCard = ({ item,onEdite }) => {
+    const router = useRouter()
+    const role = 'municipality'
+    const { handleDelete } = useDeleteNews();
     return (
         <View style={styles.card}>
             <Image
@@ -13,7 +19,19 @@ const NewCard = ({ item }) => {
                 <Text style={styles.text}>
                     {item.description}
                 </Text>
-                <Text style={styles.date}>February 2025</Text>
+                <View style={styles.dateButtonContainer}>
+                    <Text style={styles.date}>February 2025</Text>
+                    {role === 'municipality' && (
+                        <View style={styles.actions}>
+                            <TouchableOpacity style={styles.icon} onPress={handleDelete}>
+                                <FontAwesome name="trash" size={20} color="red" />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.icon} onPress={onEdite}>
+                                <FontAwesome name="edit" size={20} color="green" />
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                </View>
             </View>
         </View>
     );
@@ -53,6 +71,18 @@ const styles = StyleSheet.create({
     date: {
         fontSize: 12,
         color: 'gray',
+        marginTop: 5
+    },
+    actions: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 5
+    },
+    icon: {
+        marginLeft: 10
+    }, dateButtonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         marginTop: 5
     }
 });

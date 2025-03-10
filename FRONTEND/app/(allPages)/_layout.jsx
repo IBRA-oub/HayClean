@@ -13,6 +13,8 @@ const _layout = () => {
         <Stack.Screen name="collectionPointsMang" options={{ headerShown: false }} />
         <Stack.Screen name="allReport" options={{ headerShown: false }} />
         <Stack.Screen name="reportDetails" options={{ headerShown: false }} />
+        <Stack.Screen name="addEvent" options={{ headerShown: false }} />
+        <Stack.Screen name="editeEvent" options={{ headerShown: false }} />
       </Stack>
     </>
   )
