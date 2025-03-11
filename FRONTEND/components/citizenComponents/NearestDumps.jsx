@@ -1,15 +1,11 @@
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import images from '../../constants/images'
+import useGetReport from '../../hooks/citizenHooks/useGetReport'
 
 
 const NearestDumps = () => {
-    const data = [
-        { id: 1, image: images.mohmadiaDumps, likes: '5k' },
-        { id: 2, image: images.rabatDumps, likes: '5k' },
-        { id: 3, image: images.background, likes: '5k' }
-    ]
-
+    const { updateData, handleTogglSad } = useGetReport()
     return (
         <View style={styles.container}>
             <View style={styles.textConatiner}>
@@ -21,25 +17,32 @@ const NearestDumps = () => {
                 showsHorizontalScrollIndicator={false}
                 style={styles.scrollContainer}
             >
-                {data.map((item, index) => (
-                    <View key={index} style={styles.itemContainer}>
-                        <Image
-                            source={item.image}
-                            style={styles.imageStyle}
-                        />
-                        <TouchableOpacity style={styles.sadButton}>
+                {updateData ? (
+                    updateData.map((item, index) => (
+                        <View key={index} style={styles.itemContainer}>
                             <Image
-                                source={images.sadIcon}
-                                style={styles.sadIcon}
+                                source={{ uri: item.image }}
+                                style={styles.imageStyle}
                             />
-                            <Text>
-                                {item.likes}
-                            </Text>
+                            <TouchableOpacity style={styles.sadButton} onPress={() => handleTogglSad(item._id)}>
+                                <Image
+                                    source={images.sadIcon}
+                                    style={styles.sadIcon}
+                                />
+                                <Text>{item.sadCount}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ))
+                ) : (
+                    <View style={styles.emptyContainer}>
+                        <Image
+                            source={images.noReport}
+                            style={styles.noReportImage}
 
-                        </TouchableOpacity>
-
+                        />
+                        <Text style={styles.emptyText}>No report is available in this city.</Text>
                     </View>
-                ))}
+                )}
 
 
             </ScrollView>
@@ -51,6 +54,21 @@ const NearestDumps = () => {
 export default NearestDumps
 
 const styles = StyleSheet.create({
+    emptyContainer: {
+        flex: 1,
+        width: 420,
+        height: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyText: {
+        fontSize: 16,
+        color: 'gray',
+    },
+    noReportImage: {
+        width: '20%',
+        height: '40%',
+    },
     container: {
         width: '100%',
         height: 240,

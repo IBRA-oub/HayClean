@@ -3,10 +3,10 @@ import React from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
 import images from '../../constants/images';
-import TrashSizeDetails from '../../components/municipalityComponents/TrashSizeDetails';
 import TrashTypeDetails from '../../components/municipalityComponents/TrashTypeDetails';
 import GpsLocationDetails from '../../components/municipalityComponents/GpsLocationDetails';
 import MoreInfo from '../../components/municipalityComponents/MoreInfo';
+import TrashSizeDetails from '../../components/municipalityComponents/TrashSizeDetails';
 
 const reportDetails = () => {
     const router = useRouter()
@@ -30,7 +30,7 @@ const reportDetails = () => {
 
                 </View>
 
-                <TrashSizeDetails />
+                <TrashSizeDetails/>
                 <TrashTypeDetails />
                 <GpsLocationDetails />
                 <MoreInfo />
