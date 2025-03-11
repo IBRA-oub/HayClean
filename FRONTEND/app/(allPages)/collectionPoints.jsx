@@ -1,12 +1,15 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
 import CollectionPointCard from '../../components/citizenComponents/CollectionPointCard';
+import MapView, { Marker } from 'react-native-maps';
+import useCollectionPoint from '../../hooks/citizenHooks/useCollectionPoint';
+
 
 const CollectionPoints = () => {
   const router = useRouter();
-  const [viewMode, setViewMode] = useState('list');
+  const { userLocation, distances, viewMode, setViewMode, selectedLocation, onSelectPoint } = useCollectionPoint();
 
   return (
     <View style={styles.container}>
@@ -40,14 +43,43 @@ const CollectionPoints = () => {
 
       {viewMode === 'list' ? (
         <ScrollView style={styles.scrollView}>
-          <CollectionPointCard/>
-          <CollectionPointCard/>
-          <CollectionPointCard/>
-          <CollectionPointCard/>
-          <CollectionPointCard/>
+          {distances?.map((item, index) => (
+            <CollectionPointCard key={index} item={item} index={index + 1} onSelect={onSelectPoint} />
+          ))}
         </ScrollView>
       ) : (
-        <View style={styles.mapPlaceholder}></View>
+        <MapView
+          style={styles.map}
+          initialRegion={{
+            latitude: parseFloat(selectedLocation?.latitude || distances[0]?.latitude) || 0,
+            longitude: parseFloat(selectedLocation?.longitude || distances[0]?.longitude) || 0,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+        >
+          {userLocation && (
+            <Marker
+              coordinate={{
+                latitude: userLocation.latitude,
+                longitude: userLocation.longitude,
+              }}
+              title="You"
+              pinColor="blue"
+            />
+          )}
+          {distances?.map((item, index) => (
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: parseFloat(item.latitude),
+                longitude: parseFloat(item.longitude),
+              }}
+              title={`Collection Point ${index + 1}`}
+              description={item.city}
+            />
+          ))}
+        </MapView>
+
       )}
     </View>
   );
@@ -58,6 +90,7 @@ export default CollectionPoints;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     backgroundColor: 'white',
   },
   navbarContainer: {
@@ -97,8 +130,8 @@ const styles = StyleSheet.create({
   },
   activeButton: {
     backgroundColor: '#12B961',
-    overflow:'hidden',
-    borderRadius:19
+    overflow: 'hidden',
+    borderRadius: 19
   },
   buttonText: {
     fontSize: 17,
@@ -118,4 +151,11 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 10,
   },
+  map: {
+
+    flex: 1,
+    margin: 10,
+    borderRadius: 10,
+  }
+
 });

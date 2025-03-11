@@ -2,11 +2,11 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 
-const CollectionPointCard = () => {
+const CollectionPointCard = ({item,index,onSelect }) => {
   return (
-    <TouchableOpacity style={styles.card}>
-      <Text style={styles.name}>Collectio Point 1</Text>
-      <Text style={styles.distance}>5m</Text>
+    <TouchableOpacity style={styles.card} onPress={() => onSelect(parseFloat(item.latitude), parseFloat(item.longitude))}>
+      <Text style={styles.name}>Collection Point {index}</Text>
+      <Text style={styles.distance}>{Math.round(item.distance)}m</Text>
       <AntDesign name="right" size={20} color="gray" />
     </TouchableOpacity>
   );

@@ -29,6 +29,7 @@ import user from '../assets/images/user.png'
 import addMap from '../assets/images/addMap.png'
 import NewEvent from '../assets/images/NewEvent.png'
 import editeNews from '../assets/images/editeNews.png'
+import noReport from '../assets/images/noReport.png'
 import editeEvent from '../assets/images/editeEvent.jpg'
 import addNews from '../assets/images/addNews.jpg'
 
@@ -38,6 +39,6 @@ export default {
     homeBg, sadIcon, rabatDumps, mohmadiaDumps, animalCarcass,
     bag, construction, dangerous, electronic, glass, liquid, metal,
     organic, plastic, tire, truckIcon, wheelbarrow, wood,user,addMap,
-    NewEvent,editeEvent,addNews,editeNews
+    NewEvent,editeEvent,addNews,editeNews,noReport
 
 }

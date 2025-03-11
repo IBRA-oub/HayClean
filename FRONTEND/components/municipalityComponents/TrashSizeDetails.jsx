@@ -21,7 +21,7 @@ const TrashSizeDetails = () => {
     )
 }
 
-export default TrashSizeDetails
+export default TrashSizeDetails;
 
 const styles = StyleSheet.create({
     textStyle: {
