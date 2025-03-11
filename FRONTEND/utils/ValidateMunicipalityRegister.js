@@ -2,7 +2,7 @@ import { useState } from "react"
 
 export function ValidateMunicipalityRegister() {
     const [fields, setFields] = useState({
-        Name: '',
+        name: '',
         city: '',
         phoneNumber: '',
         email: '',
@@ -15,17 +15,17 @@ export function ValidateMunicipalityRegister() {
         setErrors({})
         let isFormValid = true
 
-        const { Name, city, phoneNumber, email, password } = fields
+        const { name, city, phoneNumber, email, password } = fields
 
-        if (Name.trim() === "") {
-            setErrors((prevState) => ({ ...prevState, Name: "Name required" }));
+        if (name.trim() === "") {
+            setErrors((prevState) => ({ ...prevState, name: "name required" }));
             isFormValid = false;
         }
-        else if (Name.length < 3) {
-            setErrors((prevState) => ({ ...prevState, Name: "Name should contain more than 3 characters" }));
+        else if (name.length < 3) {
+            setErrors((prevState) => ({ ...prevState, name: "name should contain more than 3 characters" }));
             isFormValid = false;
-        } else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/.test(Name)) {
-            setErrors((prevState) => ({ ...prevState, Name: "Name must contain only letters" }));
+        } else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/.test(name)) {
+            setErrors((prevState) => ({ ...prevState, name: "name must contain only letters" }));
             isFormValid = false;
         }
 
@@ -63,7 +63,7 @@ export function ValidateMunicipalityRegister() {
 
     const resetForm = () => {
         setFields({
-            Name: '',
+            name: '',
             city: '',
             phoneNumber: '',
             email: '',

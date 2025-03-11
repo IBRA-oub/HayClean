@@ -1,18 +1,21 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ValidateMunicipalityRegister } from "../utils/ValidateMunicipalityRegister";
+import { ValidateMunicipalityRegister } from "../../utils/ValidateMunicipalityRegister";
 import { useDispatch, useSelector } from "react-redux";
-import { CitiesSelectors } from "../redux/selectors/citySelector";
-import { clearCities, fetchCities } from "../redux/features/citySlice";
+import { CitiesSelectors } from "../../redux/selectors/citySelector";
+import { clearCities, fetchCities } from "../../redux/features/citySlice";
+import { useToast } from 'react-native-toast-notifications'
+import { registerMunicipality } from "../../redux/features/registerMunicipalitySlice";
 
 const useMunicipalityRegister = () => {
     const router = useRouter()
     const dispatch = useDispatch();
     const cities = useSelector(CitiesSelectors);
     const [isFocused, setIsFocused] = useState(false);
+    const toast = useToast();
 
     const [form, setForm] = useState({
-        Name: '',
+        name: '',
         city: '',
         phoneNumber: '',
         email: '',
@@ -36,12 +39,18 @@ const useMunicipalityRegister = () => {
     const handleSubmit = async () => {
         if (validateForm(form)) {
             try {
-                router.push('mailVerification')
+                const response = await dispatch(registerMunicipality(form))
+                if (response.payload.status === 200) {
+                    toast.show('Register succefuly', { type: 'success', duration: 3000, placement: "top", });
+                    router.push('mailVerification');
+                } else {
+                    toast.show('Email should be unique', { type: 'danger', duration: 3000, placement: "top", });
+                }
             } catch (error) {
                 console.error("Error during login:", error);
             } finally {
                 resetForm();
-                setForm({ Name: "", city: "", phoneNumber: "", email: "", password: "" });
+                setForm({ name: "", city: "", phoneNumber: "", email: "", password: "" });
             }
         }
     }

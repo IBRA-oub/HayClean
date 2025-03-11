@@ -1,9 +1,14 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { ValidateLogin } from "../utils/ValidateLogin";
+import { useToast } from 'react-native-toast-notifications'
+import { useDispatch } from "react-redux";
+import { login } from "../redux/features/loginSlice";
 
 const useLogin = () => {
     const router = useRouter();
+    const dispatch = useDispatch()
+    const toast = useToast();
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -16,17 +21,23 @@ const useLogin = () => {
     const handleSubmit = async () => {
         if (validateForm(form)) {
             try {
-                router.push('mailVerification')
+                const response = await dispatch(login(form))
+                if (response.payload.status === 200) {
+                    toast.show('Login succefuly', { type: 'success', duration: 3000, placement: "top", });
+                    router.push('mailVerification');
+                } else {
+                    toast.show('user not found', { type: 'danger', duration: 3000, placement: "top", });
+                }
             } catch (error) {
                 console.error("Error during login:", error);
             } finally {
                 resetForm();
-                setForm({email: "", password: "" });
+                setForm({ email: "", password: "" });
             }
         }
     }
 
-    return{
+    return {
         form,
         setForm,
         getError,

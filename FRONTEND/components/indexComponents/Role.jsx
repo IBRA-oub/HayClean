@@ -2,19 +2,34 @@ import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from
 import React from 'react'
 import images from '../../constants/images'
 import { useRouter } from 'expo-router'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const Role = () => {
     const router = useRouter()
+
+    const handleSelectRole = async (role) => {
+        try {
+            await AsyncStorage.setItem('role', role);
+            if (role === 'Citizen') {
+                router.push('citizenRegister');
+            } else if (role === 'Municipality') {
+                router.push('municipalityRegister');
+            }
+        } catch (error) {
+            console.error("Error saving role:", error);
+        }
+    };
+
     return (
         <ImageBackground source={images.background} style={styles.imageBackground}>
             <View style={styles.citizenRole}>
-                <TouchableOpacity style={styles.imageContainer} onPress={() => router.push('citizenRegister')}>
+                <TouchableOpacity style={styles.imageContainer} onPress={() => handleSelectRole('Citizen')}>
                     <Image
                         source={images.citizens}
                         style={styles.imageStyle}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => router.push('citizenRegister')}>
+                <TouchableOpacity style={styles.button} onPress={() => handleSelectRole('Citizen')}>
                     <Text style={styles.buttonText}>
                         CITIZEN CLICK HERE
                     </Text>
@@ -22,13 +37,13 @@ const Role = () => {
 
             </View>
             <View style={styles.municipilatyRole}>
-                <TouchableOpacity style={styles.imageContainer} onPress={() => router.push('municipalityRegister')}>
+                <TouchableOpacity style={styles.imageContainer} onPress={() => handleSelectRole('Municipality')}>
                     <Image
                         source={images.municipality}
                         style={styles.imageStyle}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => router.push('municipalityRegister')}>
+                <TouchableOpacity style={styles.button} onPress={() => handleSelectRole('Municipality')}>
                     <Text style={styles.buttonText}>
                         MUNICIPALITY CLICK HERE
                     </Text>
