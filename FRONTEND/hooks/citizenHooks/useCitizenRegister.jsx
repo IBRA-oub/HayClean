@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearCities, fetchCities } from '../../redux/features/citySlice';
 import { CitiesSelectors } from '../../redux/selectors/citySelector';
 import { ValidateCitizenRegister } from '../../utils/ValidateCitizenRegister';
+import { registerCitizen } from '../../redux/features/registerCitizenSlice';
+import { useToast } from 'react-native-toast-notifications'
 
 const useCitizenRegister = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const cities = useSelector(CitiesSelectors);
     const [isFocused, setIsFocused] = useState(false);
-    
+    const toast = useToast();
+
     const [form, setForm] = useState({
         firstName: '',
         lastName: '',
@@ -31,6 +34,7 @@ const useCitizenRegister = () => {
         }
     }, [query]);
 
+
     // Validation
     const { validateForm, getError, hasError, resetForm } = ValidateCitizenRegister();
 
@@ -38,7 +42,13 @@ const useCitizenRegister = () => {
     const handleSubmit = async () => {
         if (validateForm(form)) {
             try {
-                router.push('mailVerification');
+                const response = await dispatch(registerCitizen(form))
+                if(response.payload.status === 200){
+                    toast.show('Register succefuly', { type: 'success', duration: 3000, placement: "top", });
+                    router.push('mailVerification');
+                }else{
+                    toast.show('Email should be unique', { type: 'danger', duration: 3000, placement: "top", });
+                }
             } catch (error) {
                 console.error("Error during login:", error);
             } finally {

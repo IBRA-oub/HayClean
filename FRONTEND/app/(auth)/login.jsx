@@ -6,7 +6,6 @@ import images from '../../constants/images';
 import { useRouter } from 'expo-router';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FormField from '../../components/authComponents/FormField';
-import { ValidateLogin } from '../../utils/ValidateLogin';
 import useLogin from '../../hooks/useLogin';
 
 const Login = () => {

@@ -1,35 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { 
-    Image,
-    ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View 
-} from 'react-native';
+import React from 'react';
+import { Image, ImageBackground, KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import images from '../../constants/images';
-import { useRouter } from 'expo-router';
+import useValidateMail from '../../hooks/useValidateMail';
 
 const MailVerification = () => {
-    const router = useRouter()
-    const [code, setCode] = useState(['', '', '', '']);
-    const inputs = useRef([]);
 
-    const handleChangeText = (text, index) => {
-        if (text.length > 1) {
-            text = text.charAt(0); 
-        }
-        const newCode = [...code];
-        newCode[index] = text;
-        setCode(newCode);
-
-        if (text && index < inputs.current.length - 1) {
-            inputs.current[index + 1].focus();
-        }
-    };
-
-    const handleSubmit = () => {
-        const enteredCode = code.join('');
-        console.log('Code saisi:', enteredCode);
-        // verificatoin
-        router.push('home')
-    };
+    const { handleChangeText, handleSubmit, code ,inputs} = useValidateMail()
 
     return (
         <ImageBackground source={images.background} style={styles.background}>
@@ -38,8 +14,8 @@ const MailVerification = () => {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
                 <Image
-                source={images.hayClean}
-                style={styles.logo}
+                    source={images.hayClean}
+                    style={styles.logo}
                 />
                 <View style={styles.container}>
                     <Text style={styles.title}>Enter the code sent to your email</Text>
@@ -120,8 +96,8 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
     },
-    logo:{
-        width:300,
-        height:'30%'
+    logo: {
+        width: 300,
+        height: '30%'
     }
 });

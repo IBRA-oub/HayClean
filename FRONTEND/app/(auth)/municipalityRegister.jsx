@@ -5,12 +5,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import images from '../../constants/images';
 import { useRouter } from 'expo-router';
 import FormField from '../../components/authComponents/FormField';
-import useMunicipalityRegister from '../../hooks/useMunicipalityRegister';
+import useMunicipalityRegister from '../../hooks/municipalityHooks/useMunicipalityRegister';
 import AutocompleteInput from 'react-native-autocomplete-input';
 import { clearCities } from '../../redux/features/citySlice';
 
 const municipalityRegister = () => {
-    const { form, setForm, getError, hasError, handleSubmit, query, setQuery, cityList, isFocused, setIsFocused,dispatch } = useMunicipalityRegister()
+    const { form, setForm, getError, hasError, handleSubmit, query, setQuery, cityList, isFocused, setIsFocused, dispatch } = useMunicipalityRegister()
     const router = useRouter()
     return (
         <SafeAreaView style={styles.safeContainer}>
@@ -35,13 +35,13 @@ const municipalityRegister = () => {
 
                     <FormField
                         title="Name"
-                        value={form.Name}
-                        handleChangeText={(e) => setForm({ ...form, Name: e })}
-                        hasError={hasError("Name")}
+                        value={form.name}
+                        handleChangeText={(e) => setForm({ ...form, name: e })}
+                        hasError={hasError("name")}
                         placeholder={'Safi Municipality'}
                         otherStyles={{ marginTop: 60 }}
                     />
-                    {hasError("Name") && <Text style={styles.errorText}>{getError("Name")}</Text>}
+                    {hasError("name") && <Text style={styles.errorText}>{getError("name")}</Text>}
 
                     <View style={styles.autocompleteContainer}>
                         <Text style={styles.textField}>City</Text>
