@@ -1,26 +1,36 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import useDeleteNews from '../../hooks/municipalityHooks/useDeleteNews';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import moment from 'moment';
 
 
-const NewCard = ({ item,onEdite }) => {
-    const router = useRouter()
-    const role = 'municipality'
+const NewsCard = ({ item, onEdite }) => {
+    const [role, setRole] = useState('')
+    const getRole = async () => {
+        const resposne = await AsyncStorage.getItem('role')
+        setRole(resposne)
+    }
+    useEffect(() => {
+        getRole()
+    }, [])
+
     const { handleDelete } = useDeleteNews();
+    
     return (
         <View style={styles.card}>
             <Image
-                source={item.image}
+                source={{uri : item?.image}}
                 style={styles.image}
             />
             <View style={styles.textContainer}>
                 <Text style={styles.text}>
-                    {item.description}
+                    {item?.description}
                 </Text>
                 <View style={styles.dateButtonContainer}>
-                    <Text style={styles.date}>February 2025</Text>
+                    <Text style={styles.date}>{moment(item?.createdAt).format('MMMM YYYY')}</Text>
                     {role === 'municipality' && (
                         <View style={styles.actions}>
                             <TouchableOpacity style={styles.icon} onPress={handleDelete}>
@@ -37,7 +47,7 @@ const NewCard = ({ item,onEdite }) => {
     );
 };
 
-export default NewCard;
+export default NewsCard;
 
 const styles = StyleSheet.create({
     card: {

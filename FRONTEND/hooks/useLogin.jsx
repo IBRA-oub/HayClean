@@ -24,8 +24,8 @@ const useLogin = () => {
                 const response = await dispatch(login(form))
                 if (response.payload.status === 200) {
                     toast.show('Login succefuly', { type: 'success', duration: 3000, placement: "top", });
-                    router.push('mailVerification');
-                    // router.push('home');
+                    // router.push('mailVerification');
+                    router.push('home');
                 } else {
                     toast.show('user not found', { type: 'danger', duration: 3000, placement: "top", });
                 }

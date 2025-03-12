@@ -1,20 +1,25 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import NewCard from './NewCard'
-import images from '../../constants/images'
+import NewsCard from './NewsCard'
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import useAllNews from '../../hooks/citizenHooks/useAllNews'
 
-const AllNews = ({onEdite}) => {
-   
-    const data = [
-        { id: 1, description: 'The municipality of Casablanca will add 100 new garbage trucks next 2026 to improve waste collection and keep the city cleaner. ♻️🚛', image: images.truckIcon },
-        { id: 2, description: 'Casablanca will introduce new waste collection points across the city next year to improve waste management and accessibility. ♻️📍', image: images.citizens }
-    ]
+const AllNews = ({ onEdite }) => {
+    const { updateData } = useAllNews()
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>News</Text>
-            {data.map((item, index) => (
-                <NewCard key={index} item={item} onEdite={onEdite} />
-            ))}
+            {!updateData || updateData.length === 0 ? (
+                <View style={styles.noItem}>
+                    <FontAwesome name="newspaper-o" size={54} color="gray" />
+                    <Text style={styles.noNews}>No news available</Text>
+                </View>
+            ) : (
+                updateData?.map((item, index) => (
+                    <NewsCard key={index} item={item} onEdite={onEdite} />
+                ))
+            )}
         </View>
     )
 }
@@ -30,5 +35,16 @@ const styles = StyleSheet.create({
         width: '95%',
         fontSize: 20,
         fontWeight: '600'
+    },
+    noItem: {
+        width: '100%',
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    noNews: {
+        fontSize: 16,
+        color: 'gray',
+        marginTop: 10
     }
 })
