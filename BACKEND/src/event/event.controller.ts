@@ -28,12 +28,12 @@ export class EventController {
     return this.eventService.pendingParticipant(req.user);
   }
 
-  @Get('pendingParticipantCitizen')
+  @Get('ParticipantCitizen')
   @UseGuards(JwtAuthGuard)
-  pendingParticipantCitizen(@Req() req) {
-    return this.eventService.pendingParticipantCitizen(req.user);
+  ParticipantCitizen(@Req() req) {
+    return this.eventService.ParticipantCitizen(req.user);
   }
-  
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.eventService.findOne(id);
@@ -51,24 +51,24 @@ export class EventController {
 
   @Patch('participation/:id')
   @UseGuards(JwtAuthGuard)
-  participation(@Req() req,@Param('id') id: string) {
-    return this.eventService.participation(req.user,id);
+  participation(@Req() req, @Param('id') id: string) {
+    return this.eventService.participation(req.user, id);
   }
   @Patch('cancelParticipation/:id')
   @UseGuards(JwtAuthGuard)
-  cancelParticipation(@Req() req,@Param('id') id: string) {
-    return this.eventService.cancelParticipation(req.user,id);
+  cancelParticipation(@Req() req, @Param('id') id: string) {
+    return this.eventService.cancelParticipation(req.user, id);
   }
 
   @Patch('accepteParticipant/:id')
-  accepteParticipant(@Param('id') id: string , @Body() body: { email: string }) {
-    return this.eventService.accepteParticipant(id,body.email);
+  accepteParticipant(@Param('id') id: string, @Body() body: { email: string }) {
+    return this.eventService.accepteParticipant(id, body.email);
   }
 
   @Patch('rajecteParticipant/:id')
-  rajecteParticipant(@Param('id') id: string , @Body() body: { email: string }) {
-    return this.eventService.rajecteParticipant(id,body.email);
+  rajecteParticipant(@Param('id') id: string, @Body() body: { email: string }) {
+    return this.eventService.rajecteParticipant(id, body.email);
   }
 
-  
+
 }

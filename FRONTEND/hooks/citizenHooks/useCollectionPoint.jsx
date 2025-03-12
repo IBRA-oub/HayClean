@@ -3,6 +3,7 @@ import * as Location from 'expo-location';
 import { useDispatch, useSelector } from 'react-redux';
 import { allCollectionPoint } from '../../redux/features/allCollectionPointSlice';
 import { allCollectionPointSelectors } from '../../redux/selectors/allCollectionPointSelectors';
+import { Alert } from 'react-native';
 
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -40,25 +41,56 @@ const useCollectionPoint = () => {
 
     const data = useSelector(allCollectionPointSelectors)
 
-    useEffect(() => {
-        const getLocation = async () => {
-            try {
-                let { status } = await Location.requestForegroundPermissionsAsync();
-                if (status !== 'granted') {
-                    console.log('Permission de localisation refusée');
-                    return;
-                }
+    const getLocation = async () => {
+        try {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                Alert.alert(
+                    'Location required',
+                    'It is important to enable location services to view collection points.',
+                    [
+                        {
+                            text: 'Annuler',
+                            onPress: () => console.log('Cancel'),
+                            style: 'cancel'
+                        },
+                        {
+                            text: 'Confirm',
+                            onPress: async () => {
+                                let { status: newStatus } = await Location.requestForegroundPermissionsAsync();
 
-                let location = await Location.getCurrentPositionAsync({});
-                setUserLocation({
-                    latitude: location.coords.latitude,
-                    longitude: location.coords.longitude,
-                });
-            } catch (error) {
-                console.log('Erreur lors de la récupération de la localisation', error);
+                                if (newStatus === 'granted') {
+                                    let location = await Location.getCurrentPositionAsync({});
+                                    setUserLocation({
+                                        latitude: location.coords.latitude,
+                                        longitude: location.coords.longitude,
+                                    });
+                                } else {
+                                    Alert.alert(
+                                        'Permission Denied',
+                                        'Please enable location manually from settings.',
+                                        [{ text: 'OK' }]
+                                    );
+                                }
+                            }
+                        }
+                    ]
+                );
+                return;
             }
-        };
 
+            let location = await Location.getCurrentPositionAsync({});
+            setUserLocation({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+            });
+        } catch (error) {
+            console.log('Erreur lors de la récupération de la localisation', error);
+        }
+    };
+
+
+    useEffect(() => {
         getLocation();
     }, []);
 
@@ -78,7 +110,7 @@ const useCollectionPoint = () => {
         }
     }, [userLocation, data]);
 
-    return { userLocation, distances,viewMode,setViewMode,selectedLocation,onSelectPoint };
+    return { userLocation, distances, viewMode, setViewMode, selectedLocation, onSelectPoint };
 };
 
 export default useCollectionPoint;

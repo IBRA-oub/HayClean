@@ -6,6 +6,9 @@ import { useRouter } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { participation } from '../../redux/features/participationSlice';
 import { useToast } from 'react-native-toast-notifications'
+import { ParticipantCitizen } from '../../redux/features/ParticipantCitizenSlice'
+import { ParticipantCitizenSelectors } from '../../redux/selectors/ParticipantCitizenSelectors'
+import { cancelParticipation } from '../../redux/features/cancelParticipationSlice'
 const useAllEvents = () => {
     const dispatch = useDispatch()
     const router = useRouter()
@@ -14,13 +17,15 @@ const useAllEvents = () => {
 
     useEffect(() => {
         dispatch(allEvents())
+        dispatch(ParticipantCitizen())
+
     }, [dispatch])
 
     const allEventsData = useSelector(allEventsSelectors) || []
     const updateData = Array.isArray(allEventsData) && allEventsData.length > 0 ?
-        allEventsData.map(report => ({
-            ...report,
-            image: report?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+        allEventsData.map(event => ({
+            ...event,
+            image: event?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
         }))
         : null;
 
@@ -39,14 +44,39 @@ const useAllEvents = () => {
             toast.show('participant successufuly', { type: 'success', duration: 3000, placement: "top", });
             router.push('notification');
         } else {
-            toast.show('already participat', { type: 'danger', duration: 3000, placement: "top", });
+            toast.show('already participat', { type: 'warning', duration: 3000, placement: "top", });
             router.push('notification');
         }
+    }
+
+    const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = () => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    };
+
+
+    const data = useSelector(ParticipantCitizenSelectors)
+    const participantData = Array.isArray(data) && data.length > 0 ?
+        data.map(not => ({
+            ...not,
+            image: not?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+        }))
+        : null;
+
+    const handelCancelParticipation = async (id) => {
+        await dispatch(cancelParticipation(id))
     }
     return {
         updateData,
         role,
         hadleParticipation,
+        refreshing,
+        onRefresh,
+        participantData,
+        handelCancelParticipation
     }
 }
 

@@ -1,26 +1,28 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import images from '../../constants/images';
+import useAllEvents from '../../hooks/citizenHooks/useAllEvents';
 
-const CancelPartCard = () => {
+
+const CancelPartCard = ({ item }) => {
+    const { handelCancelParticipation } = useAllEvents()
+
     return (
         <View style={styles.card}>
             <Image
-                source={images.ramassage1}
+                source={{ uri: item?.image }}
                 style={styles.image}
             />
             <View style={styles.textContainer}>
                 <Text style={styles.text}>
-                    Join us for a day of action and community spirit!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nihil, numquam!
+                    {item?.description}
                 </Text>
                 <View style={styles.statusContainer}>
-                    <Text style={styles.statusLabel}>Status : <Text style={styles.statusValue}>Pending</Text> </Text>
-
-                    <TouchableOpacity style={styles.cancelButton}>
-                        <Text style={styles.cancelText}>Cancel</Text>
-                    </TouchableOpacity>
+                    <Text style={styles.statusLabel}>Status : <Text style={styles.statusValue}>{item?.participants[0]?.status}</Text> </Text>
+                    {item?.participants[0]?.status === "pending" &&
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => handelCancelParticipation(item?._id)} >
+                            <Text style={styles.cancelText}>Cancel</Text>
+                        </TouchableOpacity>
+                    }
                 </View>
             </View>
         </View>
