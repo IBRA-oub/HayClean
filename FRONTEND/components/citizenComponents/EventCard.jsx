@@ -1,46 +1,47 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-import images from '../../constants/images';
 import Fontisto from '@expo/vector-icons/Fontisto';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { useRouter } from 'expo-router';
 import useDeleteEvent from '../../hooks/municipalityHooks/useDeleteEvent';
+import useAllEvents from '../../hooks/citizenHooks/useAllEvents';
 
-const EventCard = () => {
-  const router = useRouter()
+
+const EventCard = ({ item }) => {
   const { handleDelete } = useDeleteEvent();
-  const role = 'municipality'
+  const { role, hadleParticipation, } = useAllEvents()
+
   return (
     <View style={styles.card}>
 
       <View style={styles.header}>
-        <Text style={styles.title}>Municipality Casa-Blanca</Text>
+        <Text style={styles.title}>Municipality {item?.city}</Text>
         <View style={styles.location}>
           <Ionicons name="location-outline" size={16} color="black" />
-          <Text style={styles.locationText}>Arrahma</Text>
+          <Text style={styles.locationText}>{item?.location}</Text>
         </View>
       </View>
 
-      <Image source={images.ramassage1} style={styles.image} />
+      <Image source={{ uri: item?.image }} style={styles.image} />
 
       <Text style={styles.description}>
-        Join us for a day of action and community spirit!
+        {item?.description}
       </Text>
 
       <View style={styles.dateTimeContainer}>
         <Text style={styles.date}>
-          <Text style={styles.bold}><Fontisto name="date" size={15} color="gray" /> </Text> 09/02/2024
+          <Text style={styles.bold}><Fontisto name="date" size={15} color="gray" /> </Text>
+          {item?.date ? new Date(item.date).toISOString().split('T')[0] : 'Invalid Date'}
         </Text>
         <Text style={styles.time}>
-          <Text style={styles.bold}><AntDesign name="clockcircleo" size={15} color="gray" /> </Text> 10:00 AM
+          <Text style={styles.bold}><AntDesign name="clockcircleo" size={15} color="gray" /> </Text> {item?.time}
         </Text>
       </View>
 
-      {role === 'municipality' ? (
+      {role === 'Municipality' ? (
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.deleteIcon}  onPress={handleDelete}>
+          <TouchableOpacity style={styles.deleteIcon} onPress={handleDelete}>
             <FontAwesome name="trash" size={20} color="white" />
             <Text style={styles.deleteText}> Delete</Text>
           </TouchableOpacity>
@@ -50,7 +51,7 @@ const EventCard = () => {
           </TouchableOpacity>
         </View>
       ) : (
-        <TouchableOpacity style={styles.joinButton}>
+        <TouchableOpacity style={styles.joinButton} onPress={() => hadleParticipation(item?._id)}>
           <Text style={styles.joinButtonText}>Participate</Text>
         </TouchableOpacity>
       )}
