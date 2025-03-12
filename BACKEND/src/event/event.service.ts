@@ -133,13 +133,13 @@ export class EventService {
     }
   }
 
-  async pendingParticipantCitizen(user: citizenProp) {
+  async ParticipantCitizen(user: citizenProp) {
     try {
+      
 
       const events = await this.eventModel.find({
         "participants": {
           $elemMatch: {
-            status: "pending",
             email: user.email
           }
         }
@@ -149,7 +149,7 @@ export class EventService {
       const filteredEvents = events.map(event => ({
         ...event.toObject(),
         participants: event.participants.filter(participant =>
-          participant.status === "pending" && participant.email === user.email
+          participant.email === user.email
         )
       }));
 
@@ -182,7 +182,7 @@ export class EventService {
     try {
 
       const updatedEvent = await this.eventModel.findOneAndUpdate(
-        { _id:eventId, "participants.email": userEmail },
+        { _id: eventId, "participants.email": userEmail },
         {
           $set: {
             "participants.$.status": "accepted",
@@ -190,7 +190,7 @@ export class EventService {
         },
         { new: true }
       );
-    
+
       if (!updatedEvent) {
         return { message: "Event or participant not found", status: 404 };
       }
@@ -205,7 +205,7 @@ export class EventService {
     try {
 
       const updatedEvent = await this.eventModel.findOneAndUpdate(
-        { _id:eventId, "participants.email": userEmail },
+        { _id: eventId, "participants.email": userEmail },
         {
           $set: {
             "participants.$.status": "rejected",
@@ -213,7 +213,7 @@ export class EventService {
         },
         { new: true }
       );
-    
+
       if (!updatedEvent) {
         return { message: "Event or participant not found", status: 404 };
       }

@@ -10,6 +10,8 @@ import allCollectionPointSlice from "../features/allCollectionPointSlice";
 import allNewsSlice from "../features/allNewsSlice";
 import allEventsSlice from "../features/allEventsSlice";
 import participationSlice from "../features/participationSlice";
+import ParticipantCitizenSlice from "../features/ParticipantCitizenSlice";
+import cancelParticipationSlice from "../features/cancelParticipationSlice";
 export const store = configureStore({
     reducer: {
         cities: citySlice,
@@ -22,6 +24,9 @@ export const store = configureStore({
         allCollectionPoint: allCollectionPointSlice,
         allNews: allNewsSlice,
         allEvents: allEventsSlice,
-        participation:participationSlice
+        participation: participationSlice,
+        ParticipantCitizen: ParticipantCitizenSlice,
+        cancelParticipation: cancelParticipationSlice,
+
     }
 }) 

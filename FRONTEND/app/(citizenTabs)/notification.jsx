@@ -1,16 +1,15 @@
 import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AcceptedNotCard from '../../components/citizenComponents/AcceptedNotCard';
 import CancelPartCard from '../../components/citizenComponents/CancelPartCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { ParticipantCitizenSelectors } from '../../redux/selectors/ParticipantCitizenSelectors';
+import { ParticipantCitizen } from '../../redux/features/ParticipantCitizenSlice';
+import useAllEvents from '../../hooks/citizenHooks/useAllEvents';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const notification = () => {
-  const [refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  };
+  const { refreshing, onRefresh, participantData } = useAllEvents()
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -24,11 +23,21 @@ const notification = () => {
         style={styles.scrollContainer}
         contentContainerStyle={{ paddingBottom: 50 }}
       >
-        <AcceptedNotCard/>
-        <AcceptedNotCard/>
-        <CancelPartCard/>
-        <AcceptedNotCard/>
-        <CancelPartCard/>
+        {participantData?.length > 0 ? (
+          participantData.map((item, index) =>
+            item?.participants?.[0]?.status === "pending" ? (
+              <CancelPartCard key={index} item={item} />
+            ) : (
+              <AcceptedNotCard key={index} item={item} />
+            )
+          )
+        ) : (
+          <View style={styles.noNotificationContainer}>
+            <MaterialIcons name="notifications-active" size={200} color="#b5b5b561" />
+            <Text style={styles.noNotificationText}>No notifications for the moment</Text>
+          </View>
+        )}
+
       </ScrollView>
     </SafeAreaView>
   )
@@ -45,4 +54,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
+  noNotificationContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 50
+  },
+  noNotificationText: {
+    fontSize: 16,
+    color: '#b5b5b5d6',
+    fontWeight: 'bold'
+  }
 })

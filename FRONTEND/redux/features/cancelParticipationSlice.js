@@ -9,16 +9,16 @@ const initialState = {
     error: null
 }
 
-export const participation = createAsyncThunk('auth/participation', async (id, { rejectWithValue,dispatch }) => {
+export const cancelParticipation = createAsyncThunk('auth/cancelParticipation', async (id, { rejectWithValue , dispatch }) => {
     try {
 
         const token = await AsyncStorage.getItem('token')
-        const response = await axios.patch(`${process.env.EXPO_PUBLIC_API_URL}/event/participation/${id}`,{}, {
+        const response = await axios.patch(`${process.env.EXPO_PUBLIC_API_URL}/event/cancelParticipation/${id}`, {}, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         });
-        if(response){
+        if (response) {
             dispatch(ParticipantCitizen())
         }
         return response.data
@@ -27,25 +27,25 @@ export const participation = createAsyncThunk('auth/participation', async (id, {
     }
 })
 
-const participationSlice = createSlice({
-    name: 'participation',
+const cancelParticipationSlice = createSlice({
+    name: 'cancelParticipation',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(participation.pending, (state) => {
+            .addCase(cancelParticipation.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(participation.fulfilled, (state, action) => {
+            .addCase(cancelParticipation.fulfilled, (state, action) => {
                 state.loading = false;
                 state.payload = action.payload.payload;
             })
-            .addCase(participation.rejected, (state, action) => {
+            .addCase(cancelParticipation.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
     }
 })
 
-export default participationSlice.reducer;
+export default cancelParticipationSlice.reducer;
