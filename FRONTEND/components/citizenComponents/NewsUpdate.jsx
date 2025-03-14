@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import React from 'react'
 import Line from './Line'
 import EventCard from './EventCard'
@@ -13,18 +13,24 @@ const NewsUpdate = () => {
                 <Text style={styles.textOne}>Nearset collection Points</Text>
             </View>
 
-            {!updateData || updateData.length === 0 ? (
-                <View style={styles.noItem}>
-                    <MaterialIcons name="event-note" size={54} color="gray" />
-                    <Text style={styles.noNews}>No events available</Text>
-                </View>
-            ) : (
-                updateData?.map((item, index) => (
-                    <View  key={index}>
-                        <Line />
-                        <EventCard item={item} />
+            {updateData ? (
+                !updateData || updateData.length === 0 ? (
+                    <View style={styles.noItem}>
+                        <MaterialIcons name="event-note" size={54} color="#b5b5b561" />
+                        <Text style={styles.noNews}>No events available</Text>
                     </View>
-                ))
+                ) : (
+                    updateData?.map((item, index) => (
+                        <View key={index}>
+                            <Line />
+                            <EventCard item={item} />
+                        </View>
+                    ))
+                )
+            ) : (
+                <View style={styles.loaderContainer}>
+                    <ActivityIndicator size="large" color="#12B961" />
+                </View>
             )}
 
         </View>
@@ -54,7 +60,14 @@ const styles = StyleSheet.create({
     },
     noNews: {
         fontSize: 16,
-        color: 'gray',
+        color: '#b5b5b5d6',
         marginTop: 10
+    },
+    loaderContainer: {
+        flex: 1,
+        width: '100%',
+        height: 240,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })

@@ -17,11 +17,19 @@ export class ReportService {
   ) { }
   async create(createReportDto: CreateReportDto, user: citizenProp, file?: Express.Multer.File) {
     let imageUrl = file ? await this.uploadImage(file) : null;
-
+    if (!imageUrl) {
+      throw new BadRequestException(`Le champ image est requis.`);
+    }
     const requiredFields = ['size', 'type', 'longitude', 'latitude'];
     for (const field of requiredFields) {
       const value = createReportDto[field];
-      if (!value || value === "null" || (Array.isArray(value) && value.length === 0)) {
+      if (
+        value === undefined ||
+        value === null ||
+        value === "null" ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0)
+      ) {
         throw new BadRequestException(`Le champ ${field} est requis.`);
       }
     }

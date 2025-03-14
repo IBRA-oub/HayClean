@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addReport } from "../../redux/features/addReportSlice";
 import { useToast } from 'react-native-toast-notifications'
- 
+
 
 const useReport = () => {
     const router = useRouter();
@@ -61,8 +61,8 @@ const useReport = () => {
         }
 
         formData.append("size", selectedSize);
-        formData.append("type", JSON.stringify(selectedTypes));
-        formData.append("accessibility", JSON.stringify(accessibilityData));
+        formData.append("type", selectedTypes);
+        formData.append("accessibility", accessibilityData);
         formData.append("moreInfo", additionalInfo);
         formData.append("longitude", String(location.longitude));
         formData.append("latitude", String(location.latitude));
