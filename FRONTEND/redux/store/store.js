@@ -12,6 +12,7 @@ import allEventsSlice from "../features/allEventsSlice";
 import participationSlice from "../features/participationSlice";
 import ParticipantCitizenSlice from "../features/ParticipantCitizenSlice";
 import cancelParticipationSlice from "../features/cancelParticipationSlice";
+import addReportSlice from "../features/addReportSlice";
 export const store = configureStore({
     reducer: {
         cities: citySlice,
@@ -27,6 +28,7 @@ export const store = configureStore({
         participation: participationSlice,
         ParticipantCitizen: ParticipantCitizenSlice,
         cancelParticipation: cancelParticipationSlice,
+        addReport: addReportSlice,
 
     }
 }) 

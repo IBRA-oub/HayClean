@@ -20,7 +20,7 @@ export const UserSchema = SchemaFactory.createForClass(User)
 @Schema({ timestamps: true })
 export class Report {
 
-    @Prop({ required: false })
+    @Prop({ required: true })
     image: string;
 
     @Prop({ required: true })
@@ -29,17 +29,11 @@ export class Report {
     @Prop({ required: true })
     type: string[];
 
-    @Prop({ required: false  })
+    @Prop({ required: false })
     sad: string[];
 
-    @Prop({ required: false, default: false })
-    inCave: boolean;
-
-    @Prop({ required: false, default: false })
-    water: boolean;
-
-    @Prop({ required: false, default: false })
-    notGenCleanup: boolean;
+    @Prop({ required: false })
+    accessibility: [];
 
     @Prop({ required: true })
     longitude: string;
@@ -53,8 +47,8 @@ export class Report {
     @Prop({ required: false })
     moreInfo: string;
 
-    @Prop({type : UserSchema , required : true})
-    user : User;
+    @Prop({ type: UserSchema, required: true })
+    user: User;
 
 
 }

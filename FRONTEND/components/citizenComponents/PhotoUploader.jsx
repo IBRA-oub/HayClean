@@ -1,14 +1,41 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'
+import * as ImagePicker from 'expo-image-picker'
 
-const PhotoUploader = () => {
+const PhotoUploader = ({ onPhotoSelected }) => {
+    const [photoUri, setPhotoUri] = useState(null);
+
+    const takePhoto = async () => {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+        if (status !== 'granted') {
+            alert("Permission refusée !");
+            return;
+        }
+
+        const result = await ImagePicker.launchCameraAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setPhotoUri(result.assets[0].uri);
+            onPhotoSelected(result.assets[0].uri);
+        }
+    };
     return (
+
         <View style={styles.photoContainer}>
-            <Text style={styles.photoText}>Take at least one photo</Text>
-            <TouchableOpacity style={styles.addPhotoButton}>
-                <AntDesign name="camera" size={24} color="white" />
-                <Text style={styles.addPhotoText}>ADD PHOTO</Text>
+            {photoUri ? (
+                <Image source={{ uri: photoUri }} style={styles.photo} />
+            ) : (
+                <Text style={styles.photoText}>Take at least one photo</Text>
+            )}
+            <TouchableOpacity style={styles.addPhotoButton} onPress={takePhoto}>
+                <AntDesign name="camera" size={24} color="white" />{ }
+                <Text style={styles.addPhotoText}>{photoUri ? 'UP-DATE' : 'ADD PHOTO'}</Text>
             </TouchableOpacity>
         </View>
     )
@@ -30,6 +57,8 @@ const styles = StyleSheet.create({
         color: 'black'
     },
     addPhotoButton: {
+        position: 'absolute',
+        bottom: 40,
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#12B961',
@@ -41,4 +70,9 @@ const styles = StyleSheet.create({
         color: 'white',
         marginLeft: 5
     },
+    photo: {
+        width: '100%',
+        height: '100%',
+        borderRadius: 10,
+    }
 })

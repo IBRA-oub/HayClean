@@ -10,8 +10,8 @@ const useLogin = () => {
     const dispatch = useDispatch()
     const toast = useToast();
     const [form, setForm] = useState({
-        email: '',
-        password: '',
+        email: 'brahimbourih@gmail.com',
+        password: 'brahim123',
     });
 
     // validation
