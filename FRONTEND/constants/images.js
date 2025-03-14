@@ -11,10 +11,10 @@ import sadIcon from '../assets/images/sadIcon.png'
 import mohmadiaDumps from '../assets/images/mohmadiaDumps.jpg'
 import rabatDumps from '../assets/images/rabatDumps.png'
 import ramassage1 from '../assets/images/ramassage1.jpg'
-import animalCarcass from '../assets/images/animalCarcass.jpg'
+import animalCarcass from '../assets/images/animalCarcass.png'
 import bag from '../assets/images/bag.png'
 import construction from '../assets/images/construction.png'
-import dangerous from '../assets/images/dangerous.jpg'
+import dangerous from '../assets/images/dangerous.png'
 import electronic from '../assets/images/electronic.png'
 import glass from '../assets/images/glass.png'
 import liquid from '../assets/images/liquid.png'
@@ -30,6 +30,7 @@ import addMap from '../assets/images/addMap.png'
 import NewEvent from '../assets/images/NewEvent.png'
 import editeNews from '../assets/images/editeNews.png'
 import noReport from '../assets/images/noReport.png'
+import placeholderImage from '../assets/images/placeholderImage.png'
 import editeEvent from '../assets/images/editeEvent.jpg'
 import addNews from '../assets/images/addNews.jpg'
 
@@ -39,6 +40,6 @@ export default {
     homeBg, sadIcon, rabatDumps, mohmadiaDumps, animalCarcass,
     bag, construction, dangerous, electronic, glass, liquid, metal,
     organic, plastic, tire, truckIcon, wheelbarrow, wood,user,addMap,
-    NewEvent,editeEvent,addNews,editeNews,noReport
+    NewEvent,editeEvent,addNews,editeNews,noReport,placeholderImage
 
 }

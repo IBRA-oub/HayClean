@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { CreateReportDto } from './dto/create-report.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
 import * as jwt from 'jsonwebtoken';
@@ -17,7 +17,22 @@ export class ReportService {
   ) { }
   async create(createReportDto: CreateReportDto, user: citizenProp, file?: Express.Multer.File) {
     let imageUrl = file ? await this.uploadImage(file) : null;
-
+    if (!imageUrl) {
+      throw new BadRequestException(`Le champ image est requis.`);
+    }
+    const requiredFields = ['size', 'type', 'longitude', 'latitude'];
+    for (const field of requiredFields) {
+      const value = createReportDto[field];
+      if (
+        value === undefined ||
+        value === null ||
+        value === "null" ||
+        value === "" ||
+        (Array.isArray(value) && value.length === 0)
+      ) {
+        throw new BadRequestException(`Le champ ${field} est requis.`);
+      }
+    }
     const reportData = {
       image: imageUrl,
       ...createReportDto,
@@ -88,7 +103,7 @@ export class ReportService {
   async toggleSad(user: citizenProp, reportId: string) {
     const email = user.email
     const report = await this.reportModel.findById(reportId)
-   
+
     if (!report) {
       throw new Error("report not found")
     }

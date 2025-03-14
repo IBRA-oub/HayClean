@@ -1,11 +1,12 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect } from 'react'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator } from 'react-native'
+import React from 'react'
 import images from '../../constants/images'
 import useGetReport from '../../hooks/citizenHooks/useGetReport'
 
 
 const NearestDumps = () => {
-    const { updateData, handleTogglSad } = useGetReport()
+    const { updateData, handleTogglSad, loading, setLoading } = useGetReport()
+
     return (
         <View style={styles.container}>
             <View style={styles.textConatiner}>
@@ -18,31 +19,45 @@ const NearestDumps = () => {
                 style={styles.scrollContainer}
             >
                 {updateData ? (
-                    updateData.map((item, index) => (
-                        <View key={index} style={styles.itemContainer}>
-                            <Image
-                                source={{ uri: item.image }}
-                                style={styles.imageStyle}
-                            />
-                            <TouchableOpacity style={styles.sadButton} onPress={() => handleTogglSad(item._id)}>
+                    updateData.length > 0 ? (
+                        updateData.map((item, index) => (
+                            <View key={index} style={styles.itemContainer}>
+                                {loading && (
+                                    <Image
+                                        source={images.placeholderImage} 
+                                        style={styles.imageStyle}
+                                    />
+                                )}
                                 <Image
-                                    source={images.sadIcon}
-                                    style={styles.sadIcon}
+                                    source={{ uri: item?.image ? item?.image : images.placeholderImage }}
+                                    style={[styles.imageStyle, loading ? { position: 'absolute', opacity: 0 } : { opacity: 1 }]}
+                                    onLoadStart={() => setLoading(true)}
+                                    onLoadEnd={() => setLoading(false)}
                                 />
-                                <Text>{item.sadCount}</Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity style={styles.sadButton} onPress={() => handleTogglSad(item._id)}>
+                                    <Image
+                                        source={images.sadIcon}
+                                        style={styles.sadIcon}
+                                    />
+                                    <Text>{item.sadCount}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        ))
+                    ) : (
+                        <View style={styles.emptyContainer}>
+                            <Image
+                                source={images.noReport}
+                                style={styles.noReportImage}
+                            />
+                            <Text style={styles.emptyText}>No report is available in this city.</Text>
                         </View>
-                    ))
+                    )
                 ) : (
-                    <View style={styles.emptyContainer}>
-                        <Image
-                            source={images.noReport}
-                            style={styles.noReportImage}
-
-                        />
-                        <Text style={styles.emptyText}>No report is available in this city.</Text>
+                    <View style={styles.loaderContainer}>
+                        <ActivityIndicator size="large" color="#12B961" />
                     </View>
                 )}
+
 
 
             </ScrollView>
@@ -126,5 +141,12 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25,
         marginRight: 9
+    },
+    loaderContainer: {
+        flex: 1,
+        width: '100%',
+        height: 240,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })

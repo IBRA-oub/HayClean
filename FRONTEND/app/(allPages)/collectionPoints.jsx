@@ -56,6 +56,7 @@ const CollectionPoints = () => {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }}
+           mapType="satellite"
         >
           {userLocation && (
             <Marker

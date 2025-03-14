@@ -1,37 +1,35 @@
-import { ArrayNotEmpty, IsArray, IsBoolean, IsOptional, IsString, ValidateNested } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateReportDto {
     @IsString()
-    image?: string;
+    @IsNotEmpty()
+    image: string;
   
     @IsString()
+    @IsNotEmpty()
     size: string;
   
     @IsArray()
     @ArrayNotEmpty()
     @IsString({ each: true })
     type: string[];
-
+    
     @IsArray()
-    @IsOptional()
     @IsString({ each: true })
     sad?: string[];
-  
-    @IsBoolean()
-    @IsOptional()
-    inCave?: boolean;
-  
-    @IsBoolean()
-    @IsOptional()
-    water?: boolean;
-  
-    @IsBoolean()
-    notGenCleanup: boolean;
+    
+    @IsArray()
+    @ArrayNotEmpty()
+    @IsString({ each: true })
+    accessibility: string[];
+    
   
     @IsString()
+    @IsNotEmpty()
     longitude: string;
   
     @IsString()
+    @IsNotEmpty()
     latitude: string;
   
     @IsString()

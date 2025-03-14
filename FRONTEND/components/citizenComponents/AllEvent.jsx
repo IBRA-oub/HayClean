@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import React from 'react'
 import EventCard from './EventCard'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -10,15 +10,20 @@ const AllEvent = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Events</Text>
-            {!updateData || updateData.length === 0 ? (
-                <View style={styles.noItem}>
-                    <MaterialIcons name="event-note" size={54} color="gray" />
-                    <Text style={styles.noNews}>No events available</Text>
+            {updateData ? (
+                !updateData || updateData.length === 0 ? (
+                    <View style={styles.noItem}>
+                        <MaterialIcons name="event-note" size={54} color="#b5b5b561" />
+                        <Text style={styles.noNews}>No events available</Text>
+                    </View>
+                ) : (
+                    updateData?.map((item, index) => (
+                        <EventCard key={index} item={item} />
+                    ))
+                )) : (
+                <View style={styles.loaderContainer}>
+                    <ActivityIndicator size="large" color="#12B961" />
                 </View>
-            ) : (
-                updateData?.map((item, index) => (
-                    <EventCard key={index} item={item} />
-                ))
             )}
         </View>
     )
@@ -45,7 +50,14 @@ const styles = StyleSheet.create({
     },
     noNews: {
         fontSize: 16,
-        color: 'gray',
+        color: '#b5b5b5d6',
         marginTop: 10
+    },
+    loaderContainer: {
+        flex: 1,
+        width: '100%',
+        height: 240,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 })

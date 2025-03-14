@@ -1,6 +1,5 @@
 import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import AntDesign from '@expo/vector-icons/AntDesign';
+import React from 'react'
 import PhotoUploader from '../../components/citizenComponents/PhotoUploader';
 import TrashSize from '../../components/citizenComponents/TrashSize';
 import TrashType from '../../components/citizenComponents/TrashType ';
@@ -12,7 +11,7 @@ import useReport from '../../hooks/citizenHooks/useReport';
 
 const reportDump = () => {
     const router = useRouter();
-    const { setSelectedSize, handleSelectType, handleSelectAccessibility, handleAddInfoChange, handleSend } = useReport()
+    const { setSelectedSize, handleSelectType, handleSelectAccessibility, handleAddInfoChange,handlePhotoSelected,handleLocationUpdate, handleSend } = useReport()
     return (
 
         <View style={styles.container}>
@@ -32,11 +31,11 @@ const reportDump = () => {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
                 <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingBottom: 50 }}>
-                    <PhotoUploader />
+                    <PhotoUploader onPhotoSelected={handlePhotoSelected} />
                     <TrashSize onSelectSize={setSelectedSize} />
                     <TrashType onSelectType={handleSelectType} />
                     <TrashAccessebility onSelectAccessibility={handleSelectAccessibility} />
-                    <GpsLocation />
+                    <GpsLocation onLocationUpdate={handleLocationUpdate} />
                     <AddInfo onAddInfoChange={handleAddInfoChange} />
                 </ScrollView>
             </KeyboardAvoidingView>

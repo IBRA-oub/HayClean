@@ -2,10 +2,11 @@ import { useDispatch, useSelector } from "react-redux"
 import { allReport } from "../../redux/features/allReportSlice"
 import { allReportSelectors } from "../../redux/selectors/allReportSelectors"
 import { toggleSad } from "../../redux/features/toggleSadSlice"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 const useGetReport = () => { 
 const dispatch = useDispatch()
+const [loading, setLoading] = useState(true);
     useEffect(() => {
         dispatch(allReport())
     }, [dispatch])
@@ -25,7 +26,9 @@ const dispatch = useDispatch()
 
     return {
         updateData,
-        handleTogglSad
+        handleTogglSad,
+        loading,
+        setLoading
     }
 }
 
