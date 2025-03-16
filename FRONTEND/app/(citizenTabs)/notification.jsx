@@ -1,10 +1,7 @@
 import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import AcceptedNotCard from '../../components/citizenComponents/AcceptedNotCard';
 import CancelPartCard from '../../components/citizenComponents/CancelPartCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { ParticipantCitizenSelectors } from '../../redux/selectors/ParticipantCitizenSelectors';
-import { ParticipantCitizen } from '../../redux/features/ParticipantCitizenSlice';
 import useAllEvents from '../../hooks/citizenHooks/useAllEvents';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 

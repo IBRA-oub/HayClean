@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 import { ParticipantCitizen } from "./participantCitizenSlice";
+import { participantMunicipality } from "./participantMunicipalitySlice";
 
 const initialState = {
     payload: null,
@@ -9,17 +10,19 @@ const initialState = {
     error: null
 }
 
-export const participation = createAsyncThunk('auth/participation', async (id, { rejectWithValue, dispatch }) => {
+export const accepteParticipation = createAsyncThunk('event/accepteParticipation', async ({ id, email }, { rejectWithValue, dispatch }) => {
     try {
-
+        const data = {
+            email: email
+        }
         const token = await AsyncStorage.getItem('token')
-        const response = await axios.patch(`${process.env.EXPO_PUBLIC_API_URL}/event/participation/${id}`, {}, {
+        const response = await axios.patch(`${process.env.EXPO_PUBLIC_API_URL}/event/accepteParticipant/${id}`, data, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         });
         if (response) {
-            dispatch(ParticipantCitizen())
+            dispatch(participantMunicipality())
         }
         return response.data
     } catch (error) {
@@ -27,25 +30,25 @@ export const participation = createAsyncThunk('auth/participation', async (id, {
     }
 })
 
-const participationSlice = createSlice({
-    name: 'participation',
+const accepteParticipationSlice = createSlice({
+    name: 'accepteParticipation',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(participation.pending, (state) => {
+            .addCase(accepteParticipation.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(participation.fulfilled, (state, action) => {
+            .addCase(accepteParticipation.fulfilled, (state, action) => {
                 state.loading = false;
                 state.payload = action.payload.payload;
             })
-            .addCase(participation.rejected, (state, action) => {
+            .addCase(accepteParticipation.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
     }
 })
 
-export default participationSlice.reducer;
+export default accepteParticipationSlice.reducer;

@@ -1,25 +1,26 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
-import images from '../../constants/images';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
-const ReportCard = () => {
+import moment from 'moment';
+const ReportCard = ({ item }) => {
     const router = useRouter()
+    const formattedTime = moment(item.createdAt).fromNow();
     return (
         <View style={styles.card}>
             <Image
-                source={images.mohmadiaDumps}
+                source={{ uri: item?.image }}
                 style={styles.image}
             />
             <View style={styles.content}>
-                <Text style={styles.time}>2 min ago</Text>
+                <Text style={styles.time}>{formattedTime}</Text>
                 <Text style={styles.reportText}>
-                    <Text style={styles.bold}>@brahim </Text>
-                    has reported a new illegal dump in Casablanca.
+                    <Text style={styles.bold}>@{item?.user?.firstName} {item?.user?.lastName} </Text>
+                    has reported a new illegal dump in {item?.user?.city}.
                     Take action now to keep the city clean!
                 </Text>
             </View>
-            <TouchableOpacity style={styles.button} onPress={()=> router.push('reportDetails')}>
+            <TouchableOpacity style={styles.button} onPress={() => router.push({ pathname: '/reportDetails', params: { id: item?._id } })}>
                 <AntDesign name="rightcircle" size={34} color="#12B961" />
             </TouchableOpacity>
         </View>

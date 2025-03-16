@@ -3,9 +3,11 @@ import React from 'react'
 import { useRouter } from 'expo-router'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import ReportCard from '../../components/municipalityComponents/ReportCard';
+import useGetReport from '../../hooks/citizenHooks/useGetReport';
 
 const allReport = () => {
     const router = useRouter()
+    const { updateData } = useGetReport()
     return (
         <View style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -17,10 +19,9 @@ const allReport = () => {
                 </View>
                 <View style={{ width: 65 }}></View>
             </View>
-            <ReportCard/>
-            <ReportCard/>
-            <ReportCard/>
-
+            {updateData?.map((item, index) => (
+                <ReportCard key={index} item={item} />
+            ))}
         </View>
     )
 }

@@ -1,3 +1,4 @@
+import { Transform } from "class-transformer";
 import { ArrayNotEmpty, IsArray, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateReportDto {
@@ -12,6 +13,9 @@ export class CreateReportDto {
     @IsArray()
     @ArrayNotEmpty()
     @IsString({ each: true })
+    // @Transform(({ value }) => 
+    //     Array.isArray(value) ? value.filter(Boolean) : (typeof value === "string" ? value.split(",").filter(Boolean) : [])
+    // )
     type: string[];
     
     @IsArray()
@@ -21,6 +25,9 @@ export class CreateReportDto {
     @IsArray()
     @ArrayNotEmpty()
     @IsString({ each: true })
+    // @Transform(({ value }) => 
+    //     Array.isArray(value) ? value.filter(Boolean) : (typeof value === "string" ? value.split(",").filter(Boolean) : [])
+    // )
     accessibility: string[];
     
   

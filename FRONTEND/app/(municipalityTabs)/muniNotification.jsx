@@ -1,16 +1,12 @@
 import { RefreshControl, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import NotificationCard from '../../components/municipalityComponents/NotificationCard';
-import ReportCard from '../../components/municipalityComponents/ReportCard';
+import useAllEvents from '../../hooks/citizenHooks/useAllEvents';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 const muniNotification = () => {
-  const [refreshing, setRefreshing] = useState(false);
-  const onRefresh = () => {
-    setRefreshing(true);
-    setTimeout(() => {
-      setRefreshing(false);
-    }, 2000);
-  };
+
+  const { refreshing, onRefresh, pendingParticipantData } = useAllEvents()
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -24,10 +20,20 @@ const muniNotification = () => {
         style={styles.scrollContainer}
         contentContainerStyle={{ paddingBottom: 50 }}
       >
-        <NotificationCard/>
-        <NotificationCard/>
-        <ReportCard/>
-        <ReportCard/>
+        {pendingParticipantData?.length > 0 ? (
+          pendingParticipantData?.map((event) =>
+            event.participants.map((participant) => (
+              <NotificationCard key={participant._id} event={event} participant={participant} />
+            ))
+          )
+        )
+          : (
+            <View style={styles.noNotificationContainer}>
+              <MaterialIcons name="notifications-active" size={200} color="#b5b5b561" />
+              <Text style={styles.noNotificationText}>No notifications for the moment</Text>
+            </View>
+          )
+        }
       </ScrollView>
     </SafeAreaView>
   )
@@ -44,4 +50,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: '100%'
   },
+  noNotificationContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 50
+  },
+  noNotificationText: {
+    fontSize: 16,
+    color: '#b5b5b5d6',
+    fontWeight: 'bold'
+  }
 })

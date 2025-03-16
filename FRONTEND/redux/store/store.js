@@ -10,9 +10,14 @@ import allCollectionPointSlice from "../features/allCollectionPointSlice";
 import allNewsSlice from "../features/allNewsSlice";
 import allEventsSlice from "../features/allEventsSlice";
 import participationSlice from "../features/participationSlice";
-import ParticipantCitizenSlice from "../features/ParticipantCitizenSlice";
+import ParticipantCitizenSlice from "../features/participantCitizenSlice";
 import cancelParticipationSlice from "../features/cancelParticipationSlice";
+import accepteParticipationSlice from "../features/accepteParticipationSlice";
+import rejecteParticipationSlice from "../features/rejecteParticipationSlice";
 import addReportSlice from "../features/addReportSlice";
+import getReportByIdSlice from "../features/getReportByIdSlice";
+import confermSlice from "../features/confermReportSlice";
+import participantMunicipalitySlice from "../features/participantMunicipalitySlice";
 export const store = configureStore({
     reducer: {
         cities: citySlice,
@@ -29,6 +34,11 @@ export const store = configureStore({
         ParticipantCitizen: ParticipantCitizenSlice,
         cancelParticipation: cancelParticipationSlice,
         addReport: addReportSlice,
+        getReportById: getReportByIdSlice,
+        conferm:confermSlice,
+        participantMunicipality:participantMunicipalitySlice,
+        accepteParticipation: accepteParticipationSlice,
+        rejecteParticipation: rejecteParticipationSlice
 
     }
 }) 

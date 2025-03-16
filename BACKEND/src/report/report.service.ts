@@ -94,7 +94,7 @@ export class ReportService {
   async confermReport(id: string) {
     try {
       const response = await this.reportModel.findByIdAndUpdate(id, { status: "completed" }, { new: true })
-      return response
+      return { message: 'Report completed successfully', status: 200, response }
     } catch (error) {
       return error
     }

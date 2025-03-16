@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-import { ParticipantCitizen } from "./participantCitizenSlice";
+
 
 const initialState = {
     payload: null,
@@ -9,43 +9,40 @@ const initialState = {
     error: null
 }
 
-export const participation = createAsyncThunk('auth/participation', async (id, { rejectWithValue, dispatch }) => {
+export const conferm = createAsyncThunk('auth/conferm', async (id, { rejectWithValue }) => {
     try {
 
         const token = await AsyncStorage.getItem('token')
-        const response = await axios.patch(`${process.env.EXPO_PUBLIC_API_URL}/event/participation/${id}`, {}, {
+        const response = await axios.patch(`${process.env.EXPO_PUBLIC_API_URL}/report/completed/${id}`,{}, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
         });
-        if (response) {
-            dispatch(ParticipantCitizen())
-        }
         return response.data
     } catch (error) {
         return rejectWithValue(error.response?.data || error.message)
     }
 })
 
-const participationSlice = createSlice({
-    name: 'participation',
+const confermSlice = createSlice({
+    name: 'conferm',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(participation.pending, (state) => {
+            .addCase(conferm.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(participation.fulfilled, (state, action) => {
+            .addCase(conferm.fulfilled, (state, action) => {
                 state.loading = false;
-                state.payload = action.payload.payload;
+                state.payload = action.payload;
             })
-            .addCase(participation.rejected, (state, action) => {
+            .addCase(conferm.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
     }
 })
 
-export default participationSlice.reducer;
+export default confermSlice.reducer;

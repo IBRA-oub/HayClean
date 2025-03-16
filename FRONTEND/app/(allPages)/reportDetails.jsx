@@ -2,14 +2,16 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'rea
 import React from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useRouter } from 'expo-router';
-import images from '../../constants/images';
 import TrashTypeDetails from '../../components/municipalityComponents/TrashTypeDetails';
 import GpsLocationDetails from '../../components/municipalityComponents/GpsLocationDetails';
 import MoreInfo from '../../components/municipalityComponents/MoreInfo';
 import TrashSizeDetails from '../../components/municipalityComponents/TrashSizeDetails';
+import useReportDetails from '../../hooks/municipalityHooks/useReportDetails';
 
 const reportDetails = () => {
     const router = useRouter()
+    const {reportDetailsData,handleConferm } = useReportDetails()
+
     return (
         <View style={styles.container}>
             <View style={styles.navbarContainer}>
@@ -24,18 +26,18 @@ const reportDetails = () => {
             <ScrollView style={styles.scrollView} contentContainerStyle={{ paddingBottom: 50 }}>
                 <View style={styles.imageontainer}>
                     <Image
-                        source={images.mohmadiaDumps}
+                        source={{ uri: reportDetailsData?.image }}
                         style={styles.image}
                     />
 
                 </View>
 
-                <TrashSizeDetails/>
-                <TrashTypeDetails />
-                <GpsLocationDetails />
-                <MoreInfo />
+                <TrashSizeDetails size={reportDetailsData?.size} />
+                <TrashTypeDetails types={reportDetailsData?.type} />
+                <GpsLocationDetails longitude={reportDetailsData?.longitude} latitude={reportDetailsData?.latitude} />
+                <MoreInfo accessibility={reportDetailsData?.accessibility} moreInfo={reportDetailsData?.moreInfo} />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={()=>handleConferm(reportDetailsData?._id)}>
                         <Text style={styles.confermText}>Conferm</Text>
                     </TouchableOpacity>
                 </View>
