@@ -6,13 +6,13 @@ import { useRouter } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { participation } from '../../redux/features/participationSlice';
 import { useToast } from 'react-native-toast-notifications'
-import { ParticipantCitizen } from '../../redux/features/participantCitizenSlice'
-import { ParticipantCitizenSelectors } from '../../redux/selectors/participantCitizenSelectors'
 import { cancelParticipation } from '../../redux/features/cancelParticipationSlice'
 import { participantMunicipality } from '../../redux/features/participantMunicipalitySlice'
 import { participantMunicipalitySelectors } from '../../redux/selectors/participantMunicipalitySelectors'
 import { accepteParticipation } from '../../redux/features/accepteParticipationSlice'
 import { rejecteParticipation } from '../../redux/features/rejecteParticipationSlice'
+import { ParticipantCitizen } from '../../redux/features/participantCitizenSlice'
+import {ParticipantCitizenSelectors} from '../../redux/selectors/ParticipantCitizenSelectors'
 const useAllEvents = () => {
     const dispatch = useDispatch()
     const router = useRouter()
