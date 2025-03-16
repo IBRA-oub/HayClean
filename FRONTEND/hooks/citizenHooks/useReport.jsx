@@ -26,10 +26,13 @@ const useReport = () => {
         });
     };
 
-    const handleSelectAccessibility = (title, viewMode) => {
+    const handleSelectAccessibility = (title) => {
         setAccessibilityData((prevData) => {
-            const updatedData = prevData.filter(item => item.title !== title);
-            return [...updatedData, title];
+            if (prevData.includes(title)) {
+                return prevData.filter((item) => item !== title);
+            } else {
+                return [...prevData, title];
+            }
         });
     };
 
@@ -61,8 +64,12 @@ const useReport = () => {
         }
 
         formData.append("size", selectedSize);
-        formData.append("type", selectedTypes);
-        formData.append("accessibility", accessibilityData);
+        selectedTypes.filter(Boolean).forEach((type) => {
+            formData.append("type[]", type);
+        });
+        accessibilityData.filter(Boolean).forEach((acc) => {
+            formData.append("accessibility[]", acc);
+        });
         formData.append("moreInfo", additionalInfo);
         formData.append("longitude", String(location.longitude));
         formData.append("latitude", String(location.latitude));

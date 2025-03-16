@@ -1,14 +1,37 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import MapView, { Marker } from 'react-native-maps';
 
-const GpsLocationDetails = () => {
+const GpsLocationDetails = ({ longitude, latitude }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.textStyle}>GPS Location</Text>
             <View style={styles.gpsContainer}>
-                <View style={styles.gps}>
-
-                </View>
+                {longitude && latitude ? (
+                    <MapView
+                        style={styles.gps}
+                        region={{
+                            latitude: latitude,
+                            longitude: longitude,
+                            latitudeDelta: 0.0005,
+                            longitudeDelta: 0.005,
+                        }}
+                        mapType="satellite"
+                        zoomEnabled={true}
+                        rotateEnabled={false}
+                    >
+                        <Marker
+                            coordinate={{
+                                latitude: latitude,
+                                longitude: longitude,
+                            }}
+                            title="dumps position"
+                            pinColor="green"
+                        />
+                    </MapView>
+                ) : (
+                    <Text style={styles.loadingText}>Obtention de la localisation...</Text>
+                )}
 
             </View>
         </View>
@@ -33,7 +56,7 @@ const styles = StyleSheet.create({
         height: 200,
         alignItems: 'center',
     },
-    gps:{
+    gps: {
         width: '95%',
         height: '100%',
         borderWidth: 1,
@@ -41,6 +64,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         borderRadius: 10,
         marginTop: 7,
-        backgroundColor:'green'
+        backgroundColor: 'green'
     }
 })

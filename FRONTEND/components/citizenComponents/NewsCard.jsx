@@ -31,7 +31,7 @@ const NewsCard = ({ item, onEdite }) => {
                 </Text>
                 <View style={styles.dateButtonContainer}>
                     <Text style={styles.date}>{moment(item?.createdAt).format('MMMM YYYY')}</Text>
-                    {role === 'municipality' && (
+                    {role === 'Municipality' && (
                         <View style={styles.actions}>
                             <TouchableOpacity style={styles.icon} onPress={handleDelete}>
                                 <FontAwesome name="trash" size={20} color="red" />

@@ -3,19 +3,24 @@ import React from 'react'
 import DumpCircleDetails from './DumpCircleDetails'
 import images from '../../constants/images';
 
-const TrashSizeDetails = () => {
+const TrashSizeDetails = ({ size }) => {
     const data = [
         { id: 1, title: 'Fits in bag', image: images.bag },
         { id: 2, title: 'Fits in a wheelbarrow', image: images.wheelbarrow },
         { id: 3, title: 'Truck needed', image: images.truckIcon },
     ];
+    const selectedSize = data.find(item => item?.title === size);
     return (
         <View style={styles.container}>
             <Text style={styles.textStyle}>Size of Trash</Text>
             <View style={styles.TrushsizeContainer}>
-                <View style={styles.sizeContainer}>
-                    <DumpCircleDetails item={data[0]} />
-                </View>
+                    {selectedSize ? (
+                        <View style={styles.sizeContainer}>
+                            <DumpCircleDetails item={selectedSize} />
+                        </View>
+                    ) : (
+                        <Text>Size not specified</Text>
+                    )}
             </View>
         </View>
     )

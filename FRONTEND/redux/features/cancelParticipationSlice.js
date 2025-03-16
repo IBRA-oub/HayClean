@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
-import { ParticipantCitizen } from "./ParticipantCitizenSlice";
+import { ParticipantCitizen } from "./participantCitizenSlice";
 
 const initialState = {
     payload: null,
@@ -9,7 +9,7 @@ const initialState = {
     error: null
 }
 
-export const cancelParticipation = createAsyncThunk('auth/cancelParticipation', async (id, { rejectWithValue , dispatch }) => {
+export const cancelParticipation = createAsyncThunk('auth/cancelParticipation', async (id, { rejectWithValue, dispatch }) => {
     try {
 
         const token = await AsyncStorage.getItem('token')

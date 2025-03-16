@@ -3,7 +3,7 @@ import React from 'react';
 import images from '../../constants/images';
 import DumpCircleDetails from './DumpCircleDetails';
 
-const TrashTypeDetails = () => {
+const TrashTypeDetails = ({ types }) => {
     const trashData = [
         { id: '1', title: 'HouseHold', image: images.wood },
         { id: '2', title: 'Automotive', image: images.tire },
@@ -11,25 +11,30 @@ const TrashTypeDetails = () => {
         { id: '4', title: 'Plastic', image: images.plastic },
         { id: '5', title: 'Electronic', image: images.electronic },
         { id: '6', title: 'Organic', image: images.organic },
-        // { id: '7', title: 'Metal', image: images.metal },
-        // { id: '8', title: 'Liquid', image: images.liquid },
-        // { id: '9', title: 'Dangerous', image: images.dangerous },
-        // { id: '10', title: 'Animal Carcass', image: images.animalCarcass },
-        // { id: '11', title: 'Glass', image: images.glass },
+        { id: '7', title: 'Metal', image: images.metal },
+        { id: '8', title: 'Liquid', image: images.liquid },
+        { id: '9', title: 'Dangerous', image: images.dangerous },
+        { id: '10', title: 'Animal Carcass', image: images.animalCarcass },
+        { id: '11', title: 'Glass', image: images.glass },
     ];
 
+    const selectedTypes = trashData?.filter(item => types?.includes(item?.title));
     return (
         <View style={styles.container}>
             <Text style={styles.textStyle}>Type of Trash</Text>
             <View style={styles.TrashTypeContainer}>
-                <FlatList
-                    data={trashData}
-                    keyExtractor={(item) => item.id}
-                    numColumns={3}
-                    renderItem={({ item }) => <DumpCircleDetails item={item} />}
-                    contentContainerStyle={styles.listContent}
-                    scrollEnabled={false}
-                />
+                {selectedTypes.length > 0 ? (
+                    <FlatList
+                        data={selectedTypes}
+                        keyExtractor={(item) => item.id}
+                        numColumns={3}
+                        renderItem={({ item }) => <DumpCircleDetails item={item} />}
+                        contentContainerStyle={styles.listContent}
+                        scrollEnabled={false}
+                    />
+                ) : (
+                    <Text>No type specified</Text>
+                )}
             </View>
         </View>
     );
@@ -55,9 +60,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     listContent: {
-        borderWidth:1,
-        borderColor:'gray',
-        width:'95%',
-        borderRadius:13
+        borderWidth: 1,
+        borderColor: 'gray',
+        width: 390,
+        borderRadius: 13
     },
 });

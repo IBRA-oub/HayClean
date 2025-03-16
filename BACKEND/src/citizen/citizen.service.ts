@@ -46,7 +46,7 @@ export class CitizenService {
 
     const user = await this.citizenModel.findOne({ email });
     if (!user) {
-      return { message: 'User not found', status: '404' };
+      return { message: 'Invalid credentials', status: '404' };
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);

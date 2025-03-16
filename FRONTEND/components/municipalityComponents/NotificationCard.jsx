@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import images from '../../constants/images';
+import useAllEvents from '../../hooks/citizenHooks/useAllEvents';
 
-const NotificationCard = () => {
+const NotificationCard = ({ event, participant }) => {
+    const { handelAccepte, handelReject } = useAllEvents()
     return (
         <View style={styles.card}>
             <Image
@@ -11,13 +13,15 @@ const NotificationCard = () => {
             />
             <View style={styles.content}>
                 <Text style={styles.message}>
-                    <Text style={styles.username}>@brahim</Text> Want to participate in the Tamaris event on 03/02/2025 at 10:00 PM?
+                    <Text style={styles.username}>@{participant?.firstName}</Text> wants to participate in the
+                    {` ${event?.city} event on ${new Date(event?.date).toLocaleDateString()} at ${event?.time} `}
+                    ?
                 </Text>
                 <View style={styles.actions}>
-                    <TouchableOpacity style={[styles.button, styles.reject]}>
+                    <TouchableOpacity style={[styles.button, styles.reject]} onPress={() =>handelReject(event?._id,participant?.email)}>
                         <Text style={[styles.buttonText, styles.rejectButton]}>Reject</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, styles.accept]}>
+                    <TouchableOpacity style={[styles.button, styles.accept]} onPress={()=>handelAccepte(event?._id,participant?.email)}>
                         <Text style={[styles.buttonText]}>Accepte</Text>
                     </TouchableOpacity>
                 </View>

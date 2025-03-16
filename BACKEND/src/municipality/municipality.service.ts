@@ -46,7 +46,7 @@ export class MunicipalityService {
     const { email, password } = loginData;
 
     const user = await this.municipalityModel.findOne({ email });
-    if (!user) return { message: 'User not found', status: 404 };
+    if (!user) return { message: 'Invalid credentials', status: 404 };
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) return { message: 'Invalid credentials', status: 401 };
@@ -59,7 +59,7 @@ export class MunicipalityService {
     // token
     const accessToken = this.generateToken(user);
 
-    return { message: 'Login successful', status: 200, user, accessToken };
+    return { message: 'Login successfully', status: 200, user, accessToken };
   }
 
   private async uploadImage(file: Express.Multer.File) {

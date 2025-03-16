@@ -6,9 +6,13 @@ import { useRouter } from 'expo-router'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { participation } from '../../redux/features/participationSlice';
 import { useToast } from 'react-native-toast-notifications'
-import { ParticipantCitizen } from '../../redux/features/ParticipantCitizenSlice'
-import { ParticipantCitizenSelectors } from '../../redux/selectors/ParticipantCitizenSelectors'
+import { ParticipantCitizen } from '../../redux/features/participantCitizenSlice'
+import { ParticipantCitizenSelectors } from '../../redux/selectors/participantCitizenSelectors'
 import { cancelParticipation } from '../../redux/features/cancelParticipationSlice'
+import { participantMunicipality } from '../../redux/features/participantMunicipalitySlice'
+import { participantMunicipalitySelectors } from '../../redux/selectors/participantMunicipalitySelectors'
+import { accepteParticipation } from '../../redux/features/accepteParticipationSlice'
+import { rejecteParticipation } from '../../redux/features/rejecteParticipationSlice'
 const useAllEvents = () => {
     const dispatch = useDispatch()
     const router = useRouter()
@@ -18,6 +22,7 @@ const useAllEvents = () => {
     useEffect(() => {
         dispatch(allEvents())
         dispatch(ParticipantCitizen())
+        dispatch(participantMunicipality())
 
     }, [dispatch])
 
@@ -66,8 +71,32 @@ const useAllEvents = () => {
         }))
         : null;
 
+    const pendingParticipant = useSelector(participantMunicipalitySelectors)
+    const pendingParticipantData = Array.isArray(pendingParticipant) && pendingParticipant.length > 0 ?
+        pendingParticipant.map(not => ({
+            ...not,
+            image: not?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+        }))
+        : null;
+
     const handelCancelParticipation = async (id) => {
         await dispatch(cancelParticipation(id))
+    }
+    const handelAccepte = async (id, email) => {
+        const response = await dispatch(accepteParticipation({ id, email }))
+        if (response.payload.status === 200) {
+            toast.show('accepted successufuly', { type: 'success', duration: 3000, placement: "top", });
+        } else {
+            toast.show('Try again', { type: 'warning', duration: 3000, placement: "top", });
+        }
+    }
+    const handelReject = async (id, email) => {
+        const response = await dispatch(rejecteParticipation({ id, email }))
+        if (response.payload.status === 200) {
+            toast.show('rejected successufuly', { type: 'success', duration: 3000, placement: "top", });
+        } else {
+            toast.show('Try again', { type: 'warning', duration: 3000, placement: "top", });
+        }
     }
     return {
         updateData,
@@ -76,7 +105,10 @@ const useAllEvents = () => {
         refreshing,
         onRefresh,
         participantData,
-        handelCancelParticipation
+        handelCancelParticipation,
+        pendingParticipantData,
+        handelAccepte,
+        handelReject
     }
 }
 

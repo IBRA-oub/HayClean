@@ -26,13 +26,13 @@ export class Report {
     @Prop({ required: true })
     size: string;
 
-    @Prop({ required: true })
+    @Prop({type: [String], required: true })
     type: string[];
 
     @Prop({ required: false })
     sad: string[];
 
-    @Prop({ required: false })
+    @Prop({type: [String], required: false })
     accessibility: [];
 
     @Prop({ required: true })
