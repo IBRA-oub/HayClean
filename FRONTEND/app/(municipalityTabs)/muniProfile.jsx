@@ -30,11 +30,11 @@ const muniProfile = () => {
           <View style={styles.persoConstiner}>
             <View style={styles.emailConatiner}>
               <AntDesign name="idcard" size={20} color="black" />
-              <Text style={{ textAlign: 'center' }}>{userData.email}</Text>
+              <Text style={{ textAlign: 'center' }}> {userData.email}</Text>
             </View>
             <View style={styles.cityConatiner}>
               <MaterialCommunityIcons name="home-city" size={20} color="black" />
-              <Text style={{ textAlign: 'center' }} >{userData.city}</Text>
+              <Text style={{ textAlign: 'center' }} > {userData.city}, MA </Text>
             </View>
 
           </View>

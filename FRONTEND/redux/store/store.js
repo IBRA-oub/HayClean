@@ -18,6 +18,9 @@ import addReportSlice from "../features/addReportSlice";
 import getReportByIdSlice from "../features/getReportByIdSlice";
 import confermSlice from "../features/confermReportSlice";
 import participantMunicipalitySlice from "../features/participantMunicipalitySlice";
+import addCollectionPointSlice from "../features/addCollectionPointSlice";
+import editeCollectionPointSlice from "../features/editeCollectionPointSlice";
+import deleteCollectionPointSlice from "../features/deleteCollectionPointSlice";
 export const store = configureStore({
     reducer: {
         cities: citySlice,
@@ -38,7 +41,10 @@ export const store = configureStore({
         conferm:confermSlice,
         participantMunicipality:participantMunicipalitySlice,
         accepteParticipation: accepteParticipationSlice,
-        rejecteParticipation: rejecteParticipationSlice
+        rejecteParticipation: rejecteParticipationSlice,
+        addCollectionPoint:addCollectionPointSlice,
+        editeCollectionPoint:editeCollectionPointSlice,
+        deleteCollectionPoint:deleteCollectionPointSlice,
 
     }
 }) 

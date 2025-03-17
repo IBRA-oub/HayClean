@@ -11,7 +11,7 @@ const useCitizenProfile = () => {
         firstName: 'first Name',
         lastName: 'last Name',
         email: 'email',
-        city: 'city'
+        city: 'city, MA'
     });
 
     const handleDelete = () => {

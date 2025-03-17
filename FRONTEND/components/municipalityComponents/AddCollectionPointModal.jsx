@@ -29,7 +29,7 @@ const AddCollectionPointModal = ({ visible, onClose}) => {
                         value={form.longitude}
                         handleChangeText={(e) => setForm({ ...form, longitude: e })}
                         hasError={hasError("longitude")}
-                        placeholder="64.4567890"
+                        placeholder="-7.5898"
                         keyboardType="numbers-and-punctuation"
                         otherStyles={{ marginTop: 20 }}
                     />
@@ -48,7 +48,7 @@ const AddCollectionPointModal = ({ visible, onClose}) => {
 
                     <TouchableOpacity
                         style={styles.submitButton}
-                        onPress={() => handleSubmit(form.longitude, form.latitude,onClose)}
+                        onPress={() => handleSubmit(onClose)}
                     >
                         <Text style={styles.submitText}>Submit</Text>
                     </TouchableOpacity>

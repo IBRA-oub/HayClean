@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import React from 'react';
 import { FontAwesome, Entypo } from '@expo/vector-icons';
 
-const CollectionPointCardMang = ({onEdite,onDelete }) => {
+const CollectionPointCardMang = ({onEdite,onDelete,item,index }) => {
 
     const onDeletePress = () => {
         Alert.alert(
@@ -24,10 +24,10 @@ const CollectionPointCardMang = ({onEdite,onDelete }) => {
   return (
     <View style={styles.card}>
       <View style={styles.textContainer}>
-        <Text style={styles.title}>Collection Point 1</Text>
-        <Text style={styles.info}><Text style={styles.label}>Longitude :</Text> 23456789</Text>
-        <Text style={styles.info}><Text style={styles.label}>Latitude :</Text> 23456789</Text>
-        <Text style={styles.info}><Text style={styles.label}>City :</Text> <Text style={styles.city}>Casablanca</Text></Text>
+        <Text style={styles.title}>Collection Point {index}</Text>
+        <Text style={styles.info}><Text style={styles.label}>Longitude :</Text> {item?.longitude}</Text>
+        <Text style={styles.info}><Text style={styles.label}>Latitude :</Text> {item?.latitude}</Text>
+        <Text style={styles.info}><Text style={styles.label}>City :</Text> <Text style={styles.city}>{item?.city}</Text></Text>
       </View>
       <View style={styles.icons}>
         <TouchableOpacity onPress={onDeletePress}>
