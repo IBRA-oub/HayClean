@@ -18,43 +18,37 @@ const NearestDumps = () => {
                 showsHorizontalScrollIndicator={false}
                 style={styles.scrollContainer}
             >
-                {updateData ? (
-                    updateData.length > 0 ? (
-                        updateData.map((item, index) => (
-                            <View key={index} style={styles.itemContainer}>
-                                {loading && (
-                                    <Image
-                                        source={images.placeholderImage} 
-                                        style={styles.imageStyle}
-                                    />
-                                )}
+                {updateData?.length > 0 ? (
+                    updateData.map((item, index) => (
+                        <View key={index} style={styles.itemContainer}>
+                            {loading && (
                                 <Image
-                                    source={{ uri: item?.image ? item?.image : images.placeholderImage }}
-                                    style={[styles.imageStyle, loading ? { position: 'absolute', opacity: 0 } : { opacity: 1 }]}
-                                    onLoadStart={() => setLoading(true)}
-                                    onLoadEnd={() => setLoading(false)}
+                                    source={images.placeholderImage}
+                                    style={styles.imageStyle}
                                 />
-                                <TouchableOpacity style={styles.sadButton} onPress={() => handleTogglSad(item._id)}>
-                                    <Image
-                                        source={images.sadIcon}
-                                        style={styles.sadIcon}
-                                    />
-                                    <Text>{item.sadCount}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        ))
-                    ) : (
-                        <View style={styles.emptyContainer}>
+                            )}
                             <Image
-                                source={images.noReport}
-                                style={styles.noReportImage}
+                                source={{ uri: item?.image ? item?.image : images.placeholderImage }}
+                                style={[styles.imageStyle, loading ? { position: 'absolute', opacity: 0 } : { opacity: 1 }]}
+                                onLoadStart={() => setLoading(true)}
+                                onLoadEnd={() => setLoading(false)}
                             />
-                            <Text style={styles.emptyText}>No report is available in this city.</Text>
+                            <TouchableOpacity style={styles.sadButton} onPress={() => handleTogglSad(item._id)}>
+                                <Image
+                                    source={images.sadIcon}
+                                    style={styles.sadIcon}
+                                />
+                                <Text>{item.sadCount}</Text>
+                            </TouchableOpacity>
                         </View>
-                    )
+                    ))
                 ) : (
-                    <View style={styles.loaderContainer}>
-                        <ActivityIndicator size="large" color="#12B961" />
+                    <View style={styles.emptyContainer}>
+                        <Image
+                            source={images.noReport}
+                            style={styles.noReportImage}
+                        />
+                        <Text style={styles.emptyText}>No report is available in this city.</Text>
                     </View>
                 )}
 

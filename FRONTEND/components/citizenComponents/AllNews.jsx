@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import React from 'react'
 import NewsCard from './NewsCard'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -10,21 +10,18 @@ const AllNews = ({ onEdite }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>News</Text>
-            {updateData ? (
-                !updateData || updateData.length === 0 ? (
+            {updateData?.length > 0 ? (
+                updateData?.map((item, index) => (
+                    <NewsCard key={index} item={item} onEdite={onEdite} />
+                ))
+            )
+                : (
                     <View style={styles.noItem}>
                         <FontAwesome name="newspaper-o" size={54} color="#b5b5b561" />
                         <Text style={styles.noNews}>No news available</Text>
                     </View>
-                ) : (
-                    updateData?.map((item, index) => (
-                        <NewsCard key={index} item={item} onEdite={onEdite} />
-                    ))
-                )) : (
-                <View style={styles.loaderContainer}>
-                    <ActivityIndicator size="large" color="#12B961" />
-                </View>
-            )}
+                )
+            }
         </View>
     )
 }
