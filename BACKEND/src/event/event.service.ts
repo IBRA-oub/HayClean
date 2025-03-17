@@ -62,15 +62,22 @@ export class EventService {
     }
   }
 
-  async update(id: string, updateEventDto: UpdateEventDto) {
+  async update(id: string, updateEventDto: UpdateEventDto, file?: Express.Multer.File) {
     try {
-      const updatEvent = await this.eventModel.findByIdAndUpdate(id, { ...updateEventDto }, { new: true })
-      return { message: 'event update successufuly', status: 200, updatEvent }
-    } catch (error) {
-      return error
+        let imageUrl = file ? await this.uploadImage(file) : undefined;
+        const updateData = {
+            ...updateEventDto,
+            ...(imageUrl && { image: imageUrl })  
+        };
 
+        const updatedEvent = await this.eventModel.findByIdAndUpdate(id, updateData, { new: true });
+
+        return { message: 'Event updated successfully', status: 200, updatedEvent };
+    } catch (error) {
+        return { message: 'Error updating event', status: 500, error: error.message };
     }
-  }
+}
+
 
   async remove(id: string) {
     try {

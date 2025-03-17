@@ -19,7 +19,7 @@ export function ValidateAddEvent() {
         const { image, description, location, date, time } = fields
 
         const dateRegex = /^\d{4}-\d{2}-\d{2}$/; 
-        const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+        const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9] ?(AM|PM)$/i;
 
         if (image.trim() === "") {
             setErrors((prevState) => ({ ...prevState, image: "image required" }));
@@ -45,9 +45,12 @@ export function ValidateAddEvent() {
         if (time.trim() === "") {
             setErrors((prevState) => ({ ...prevState, time: "time required" }));
             isFormValid = false;
-        }else if (!timeRegex.test(time)) {
-            setErrors((prevState) => ({ ...prevState, time: "invalid time format (HH:MM)" }));
-            isFormValid = false;
+        }else {
+            const cleanedTime = time.replace(/\s+/g, ' ').trim(); 
+            if (!timeRegex.test(cleanedTime)) {
+                setErrors((prevState) => ({ ...prevState, time: "Invalid time format (HH:MM AM/PM)" }));
+                isFormValid = false;
+            }
         }
 
         return isFormValid
