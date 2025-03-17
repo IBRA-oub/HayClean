@@ -20,7 +20,12 @@ import confermSlice from "../features/confermReportSlice";
 import participantMunicipalitySlice from "../features/participantMunicipalitySlice";
 import addCollectionPointSlice from "../features/addCollectionPointSlice";
 import editeCollectionPointSlice from "../features/editeCollectionPointSlice";
+import editeEventSlice from "../features/editeEventSlice";
 import deleteCollectionPointSlice from "../features/deleteCollectionPointSlice";
+import deleteEventSlice from "../features/deleteEventSlice";
+import addEventSlice from "../features/addEventSlice";
+import addNewsSlice from "../features/addNewsSlice";
+import deleteNewsSlice from "../features/deleteNewsSlice";
 export const store = configureStore({
     reducer: {
         cities: citySlice,
@@ -45,6 +50,11 @@ export const store = configureStore({
         addCollectionPoint:addCollectionPointSlice,
         editeCollectionPoint:editeCollectionPointSlice,
         deleteCollectionPoint:deleteCollectionPointSlice,
+        deleteEvent:deleteEventSlice,
+        addEvent:addEventSlice,
+        editeEvent:editeEventSlice,
+        addNews:addNewsSlice,
+        deleteNews:deleteNewsSlice,
 
     }
 }) 

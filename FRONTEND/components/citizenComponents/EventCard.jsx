@@ -10,7 +10,7 @@ import useAllEvents from '../../hooks/citizenHooks/useAllEvents';
 
 const EventCard = ({ item }) => {
   const { handleDelete } = useDeleteEvent();
-  const { role, hadleParticipation, } = useAllEvents()
+  const { role, hadleParticipation,router } = useAllEvents()
 
   return (
     <View style={styles.card}>
@@ -41,11 +41,11 @@ const EventCard = ({ item }) => {
 
       {role === 'Municipality' ? (
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.deleteIcon} onPress={handleDelete}>
+          <TouchableOpacity style={styles.deleteIcon} onPress={() => handleDelete(item?._id)}>
             <FontAwesome name="trash" size={20} color="white" />
             <Text style={styles.deleteText}> Delete</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.editeIcon} onPress={() => router.push('editeEvent')}>
+          <TouchableOpacity style={styles.editeIcon} onPress={() => router.push({ pathname: '/editeEvent', params: { item: JSON.stringify(item) } })}>
             <FontAwesome name="edit" size={20} color="white" />
             <Text style={styles.editeText}>Edite</Text>
           </TouchableOpacity>

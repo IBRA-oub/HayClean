@@ -6,8 +6,8 @@ import FormField from '../authComponents/FormField';
 import useAddNews from '../../hooks/municipalityHooks/useAddNews';
 
 
-const AddNewsModal = ({ visible, onClose}) => {
-    const { form,setForm,getError,hasError,handleSubmit} = useAddNews()
+const AddNewsModal = ({ visible, onClose }) => {
+    const { form, setForm, getError, hasError, handleSubmit,pickImage } = useAddNews()
 
     return (
         <Modal visible={visible} animationType="slide" transparent>
@@ -25,14 +25,13 @@ const AddNewsModal = ({ visible, onClose}) => {
                     />
                     <Text style={styles.title}>Add News</Text>
 
-                    <FormField
-                        title="Image"
-                        value={form.image}
-                        handleChangeText={(e) => setForm({ ...form, image: e })}
-                        hasError={hasError("image")}
-                        placeholder="image"
-                        otherStyles={{ marginTop: 20 }}
-                    />
+                    <TouchableOpacity onPress={pickImage} style={styles.imagePicker}>
+                        {form.image ? (
+                            <Image source={{ uri: form.image }} style={styles.previewImage} />
+                        ) : (
+                            <Text style={styles.placeholderText}>Select an image</Text>
+                        )}
+                    </TouchableOpacity>
                     {hasError("image") && <Text style={styles.errorText}>{getError("image")}</Text>}
 
                     <FormField
@@ -47,7 +46,7 @@ const AddNewsModal = ({ visible, onClose}) => {
 
                     <TouchableOpacity
                         style={styles.submitButton}
-                        onPress={() => handleSubmit(form.image, form.description,onClose)}
+                        onPress={() => handleSubmit(form.image, form.description, onClose)}
                     >
                         <Text style={styles.submitText}>Submit</Text>
                     </TouchableOpacity>
@@ -67,7 +66,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContainer: {
-        marginTop:160,
+        marginTop: 160,
         width: '90%',
         height: '50%',
         backgroundColor: 'white',
@@ -126,5 +125,23 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'left',
         width: '100%'
+    },
+    imagePicker: {
+        width: "100%",
+        height: 150,
+        backgroundColor: "#f0f0f0",
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
+        marginTop: 20,
+    },
+    previewImage: {
+        width: "100%",
+        height: "100%",
+        borderRadius: 10,
+    },
+    placeholderText: {
+        color: "#888",
+        fontSize: 16,
     },
 });

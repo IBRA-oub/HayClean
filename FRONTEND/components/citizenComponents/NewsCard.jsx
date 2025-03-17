@@ -33,7 +33,7 @@ const NewsCard = ({ item, onEdite }) => {
                     <Text style={styles.date}>{moment(item?.createdAt).format('MMMM YYYY')}</Text>
                     {role === 'Municipality' && (
                         <View style={styles.actions}>
-                            <TouchableOpacity style={styles.icon} onPress={handleDelete}>
+                            <TouchableOpacity style={styles.icon} onPress={() => handleDelete(item?._id)}>
                                 <FontAwesome name="trash" size={20} color="red" />
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.icon} onPress={onEdite}>

@@ -11,8 +11,8 @@ import { participantMunicipality } from '../../redux/features/participantMunicip
 import { participantMunicipalitySelectors } from '../../redux/selectors/participantMunicipalitySelectors'
 import { accepteParticipation } from '../../redux/features/accepteParticipationSlice'
 import { rejecteParticipation } from '../../redux/features/rejecteParticipationSlice'
+import { ParticipantCitizenSelectors } from '../../redux/selectors/ParticipantCitizenSelectors'
 import { ParticipantCitizen } from '../../redux/features/participantCitizenSlice'
-import {ParticipantCitizenSelectors} from '../../redux/selectors/ParticipantCitizenSelectors'
 const useAllEvents = () => {
     const dispatch = useDispatch()
     const router = useRouter()
@@ -32,7 +32,7 @@ const useAllEvents = () => {
             ...event,
             image: event?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
         }))
-        : null;
+        : [];
 
 
     const getRole = async () => {
@@ -108,7 +108,8 @@ const useAllEvents = () => {
         handelCancelParticipation,
         pendingParticipantData,
         handelAccepte,
-        handelReject
+        handelReject,
+        router
     }
 }
 
