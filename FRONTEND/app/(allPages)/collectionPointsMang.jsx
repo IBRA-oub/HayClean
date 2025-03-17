@@ -1,24 +1,23 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import { useRouter } from 'expo-router';
 import CollectionPointCardMang from '../../components/municipalityComponents/CollectionPointCardMang';
 import AddCollectionPointModal from '../../components/municipalityComponents/AddCollectionPointModal';
 import EditeCollectionPointModal from '../../components/municipalityComponents/EditeCollecttionPointModal';
+import useEditeCollectionPoint from '../../hooks/municipalityHooks/useEditeCollectionPoint';
+import MapView, { Marker } from 'react-native-maps';
 
-const collectionPointsMang = () => {
-    const router = useRouter();
-    const [viewMode, setViewMode] = useState('list');
-    const [modalVisible, setModalVisible] = useState(false);
-    const [editeModalVisible, setEditeModalVisible] = useState(false);
 
-    const handlePress = () => {
-        setEditeModalVisible(true)
-    }
+const CollectionPointsMang = () => {
+    const { router, viewMode, setViewMode, modalVisible, setEditeModalVisible, setModalVisible, editeModalVisible, selectedPoint, handlePress, handleDelete, data,selectedCoords,setSelectedCoords,initialRegion,handleMapPress,copyToClipboard } = useEditeCollectionPoint();
 
-    const handleDelete = () => {
-        console.log("Point de collecte supprimé !");
-      };
+    useEffect(() => {
+        if (viewMode === 'list') {
+            setSelectedCoords(null);
+        }
+    }, [viewMode]);
+    
+
 
     return (
         <View style={styles.container}>
@@ -52,31 +51,68 @@ const collectionPointsMang = () => {
 
             {viewMode === 'list' ? (
                 <ScrollView style={styles.scrollView}>
-                    <CollectionPointCardMang onEdite={handlePress} onDelete={handleDelete} />
-                    <CollectionPointCardMang onEdite={handlePress} onDelete={handleDelete} />
-                    <CollectionPointCardMang onEdite={handlePress} onDelete={handleDelete} />
-                    <CollectionPointCardMang onEdite={handlePress} onDelete={handleDelete} />
+                    {data?.map((item, index) => (
+                        <CollectionPointCardMang key={index} index={index + 1} item={item} onEdite={() => handlePress(item)} onDelete={() => handleDelete(item?._id)} />
+                    ))}
                 </ScrollView>
             ) : (
-                <View style={styles.mapPlaceholder}></View>
+                <MapView style={styles.map} initialRegion={initialRegion} mapType="satellite" onPress={handleMapPress}>
+                    {data?.map((item, index) => (
+                        <Marker
+                            key={index}
+                            coordinate={{
+                                latitude: parseFloat(item.latitude),
+                                longitude: parseFloat(item.longitude),
+                            }}
+                            title={`Collection Point ${index + 1}`}
+                            description={item.city}
+                        />
+                    ))}
+
+                    {selectedCoords && (
+                        <Marker
+                            coordinate={selectedCoords}
+                            title="Nouvelle Position"
+                            description="Cliquez pour copier"
+                            onPress={() => copyToClipboard('latitude')}
+                            pinColor="orange"
+                        />
+                    )}
+                </MapView>
             )}
+
+            {selectedCoords && (
+                <View style={styles.coordContainer}>
+                    <TouchableOpacity onPress={() => copyToClipboard('longitude')}>
+                        <Text style={styles.coordText}>
+                            Lon: <Text style={styles.copyText}>{selectedCoords.longitude} <Text style={styles.copierText}>(copy)</Text></Text>
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={() => copyToClipboard('latitude')}>
+                        <Text style={styles.coordText}>
+                            Lat: <Text style={styles.copyText}>{selectedCoords.latitude} <Text style={styles.copierText}>(copy)</Text></Text>
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+            )}
+
+
             <TouchableOpacity style={styles.addButton} onPress={() => setModalVisible(true)}>
                 <AntDesign name="plus" size={30} color="white" />
             </TouchableOpacity>
 
-            <AddCollectionPointModal
-                visible={modalVisible}
-                onClose={() => setModalVisible(false)}
-            />
-            <EditeCollectionPointModal
-                visible={editeModalVisible}
-                onClose={() => setEditeModalVisible(false)}
-            />
+            <AddCollectionPointModal visible={modalVisible} onClose={() => setModalVisible(false)} />
+
+            {editeModalVisible && (
+                <EditeCollectionPointModal pointData={selectedPoint} visible={editeModalVisible} onClose={() => setEditeModalVisible(false)} />
+            )}
         </View>
     );
-}
+};
 
-export default collectionPointsMang
+export default CollectionPointsMang;
 
 const styles = StyleSheet.create({
     container: {
@@ -135,9 +171,8 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
     },
-    mapPlaceholder: {
+    map: {
         flex: 1,
-        backgroundColor: '#12B961',
         margin: 10,
         borderRadius: 10,
     },
@@ -157,4 +192,33 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 5,
     },
+    coordContainer: {
+        position: 'absolute',
+        top: 155,
+        left: 80,
+        backgroundColor: 'white',
+        padding: 10,
+        borderRadius: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 5,
+        height: 75,
+        justifyContent: 'space-around'
+    },
+    coordText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'gray'
+    },
+    copyText: {
+        color: 'orange',
+        fontSize: 14,
+    },
+    copierText: {
+        fontSize: 12,
+        color: '#12B961',
+        fontWeight: '400'
+    }
 });

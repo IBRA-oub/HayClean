@@ -5,8 +5,8 @@ import images from '../../constants/images';
 import FormField from '../authComponents/FormField';
 import useEditeCollectionPoint from '../../hooks/municipalityHooks/useEditeCollectionPoint';
 
-const EditeCollectionPointModal = ({ visible, onClose}) => {
-    const { form,setForm,getError,hasError,handleSubmit} = useEditeCollectionPoint()
+const EditeCollectionPointModal = ({ visible, onClose,pointData}) => {
+    const { form,setForm,getError,hasError,handleSubmit} = useEditeCollectionPoint(pointData)
 
     return (
         <Modal visible={visible} animationType="slide" transparent>
@@ -48,7 +48,7 @@ const EditeCollectionPointModal = ({ visible, onClose}) => {
 
                     <TouchableOpacity
                         style={styles.submitButton}
-                        onPress={() => handleSubmit(form.longitude, form.latitude,onClose)}
+                        onPress={() => handleSubmit(onClose)}
                     >
                         <Text style={styles.submitText}>Update</Text>
                     </TouchableOpacity>
