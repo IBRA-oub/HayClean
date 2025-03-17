@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import CollectionPointCard from '../../components/citizenComponents/CollectionPointCard';
 import MapView, { Marker } from 'react-native-maps';
 import useCollectionPoint from '../../hooks/citizenHooks/useCollectionPoint';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 
 const CollectionPoints = () => {
@@ -43,9 +44,18 @@ const CollectionPoints = () => {
 
       {viewMode === 'list' ? (
         <ScrollView style={styles.scrollView}>
-          {distances?.map((item, index) => (
-            <CollectionPointCard key={index} item={item} index={index + 1} onSelect={onSelectPoint} />
-          ))}
+          {distances?.length > 0 ? (
+            distances?.map((item, index) => (
+              <CollectionPointCard key={index} item={item} index={index + 1} onSelect={onSelectPoint} />
+            ))
+          ) : (
+            <View style={styles.noItem}>
+              
+              <FontAwesome6 name="map-location-dot" size={200} color="#b5b5b561" />
+              <Text style={styles.noNews}>No events available</Text>
+            </View>
+          )}
+
         </ScrollView>
       ) : (
         <MapView
@@ -56,7 +66,7 @@ const CollectionPoints = () => {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           }}
-           mapType="satellite"
+          mapType="satellite"
         >
           {userLocation && (
             <Marker
@@ -157,6 +167,12 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     borderRadius: 10,
-  }
+  },
+  noItem: {
+    width: '100%',
+    height: 500,
+    justifyContent: 'center',
+    alignItems: 'center'
+},
 
 });

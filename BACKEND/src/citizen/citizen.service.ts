@@ -55,7 +55,8 @@ export class CitizenService {
     }
 
     // verify mail
-    if (user.verificationCode == null) {
+    
+    if (user.verificationCode == null) {  
       await this.verificationService.sendVerificationEmailCitizen(user);
     }
 

@@ -13,6 +13,7 @@ export class VerificationCitizenService {
   ) { }
 
   async sendVerificationEmailCitizen(user: Citizen) {
+    console.log(user.verificationCode)
     const verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
     user.verificationCode = verificationCode;
     await user.save();
@@ -24,7 +25,6 @@ export class VerificationCitizenService {
     const jwtToken = accessToken.split(' ')[1];
     const decodedToken = jwt.decode(jwtToken) as jwt.JwtPayload;
     const email = decodedToken?.email;
-
     const user = await this.citizenModel.findOne({ email });
 
     if (!user) {

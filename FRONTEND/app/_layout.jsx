@@ -7,7 +7,7 @@ const _layout = () => {
     return (
         <ProviderFunction>
             <ToastProvider>
-                <Stack>
+                <Stack screenOptions={{ gestureEnabled: false }}>
                     <Stack.Screen name='index' options={{ headerShown: false }} />
                     <Stack.Screen name='(auth)' options={{ headerShown: false }} />
                     <Stack.Screen name='(citizenTabs)' options={{ headerShown: false }} />

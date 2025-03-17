@@ -13,25 +13,22 @@ const NewsUpdate = () => {
                 <Text style={styles.textOne}>Nearset collection Points</Text>
             </View>
 
-            {updateData ? (
-                !updateData || updateData.length === 0 ? (
-                    <View style={styles.noItem}>
-                        <MaterialIcons name="event-note" size={54} color="#b5b5b561" />
-                        <Text style={styles.noNews}>No events available</Text>
-                    </View>
-                ) : (
+            {updateData?.length > 0 ?
+                (
                     updateData?.map((item, index) => (
                         <View key={index}>
                             <Line />
                             <EventCard item={item} />
                         </View>
                     ))
+                ) :
+                (
+                    <View style={styles.noItem}>
+                        <MaterialIcons name="event-note" size={54} color="#b5b5b561" />
+                        <Text style={styles.noNews}>No events available</Text>
+                    </View>
                 )
-            ) : (
-                <View style={styles.loaderContainer}>
-                    <ActivityIndicator size="large" color="#12B961" />
-                </View>
-            )}
+            }
 
         </View>
     )
