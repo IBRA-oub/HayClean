@@ -1,14 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateMunicipalityDto } from './dto/create-municipality.dto';
 import { UpdateMunicipalityDto } from './dto/update-municipality.dto';
 import { Municipality } from './entities/municipality.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { MinioService } from 'src/services/minio';
 import { props } from 'src/types/loginType';
 import { VerificationMunicipalityService } from './aop/verification.service';
+import { Injectable } from '@nestjs/common';
 
 
 @Injectable()
