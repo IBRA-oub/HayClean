@@ -1,14 +1,14 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCitizenDto } from './dto/create-citizen.dto';
 import { UpdateCitizenDto } from './dto/update-citizen.dto';
 import { Citizen } from './entities/citizen.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MinioService } from 'src/services/minio';
-import * as bcrypt from 'bcrypt';
+import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { props } from 'src/types/loginType';
 import { VerificationCitizenService } from './aop/verificationCitizen.service';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class CitizenService {
@@ -55,8 +55,8 @@ export class CitizenService {
     }
 
     // verify mail
-    
-    if (user.verificationCode == null) {  
+
+    if (user.verificationCode == null) {
       await this.verificationService.sendVerificationEmailCitizen(user);
     }
 
