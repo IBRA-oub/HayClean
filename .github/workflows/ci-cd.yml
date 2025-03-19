@@ -1,0 +1,51 @@
+name: Test and Validate
+
+on:
+  push:
+    branches:
+      - '*'  
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install Dependencies
+        working-directory: ./BACKEND
+        run: npm install
+
+      - name: Lint Code
+        working-directory: ./BACKEND
+        run: npm run lint
+
+      - name: Run Tests
+        working-directory: ./BACKEND
+        run: npm test
+
+  docker-tests:
+    runs-on: ubuntu-latest
+    needs: backend-tests
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Docker Image
+        working-directory: ./BACKEND
+        run: docker build -t my-backend .
+
+      - name: Run Tests in Docker
+        working-directory: ./BACKEND
+        run: docker run --rm my-backend npm test

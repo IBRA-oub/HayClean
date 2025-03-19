@@ -21,7 +21,7 @@ const useReportDetails = () => {
     const data = useSelector(getReportByIdSelectors) || []
     const reportDetailsData = {
         ...data,
-        image: data?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+        image: data?.image?.replace(/127\.0\.0\.1|minio/g, process.env.EXPO_PUBLIC_IP_ADDRESS),
     };
 
     const handleConferm = (reportId) => {

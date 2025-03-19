@@ -1,4 +1,3 @@
-import { BadRequestException, HttpException, Injectable } from '@nestjs/common';
 import { CreateReportDto } from './dto/create-report.dto';
 import { UpdateReportDto } from './dto/update-report.dto';
 import * as jwt from 'jsonwebtoken';
@@ -8,6 +7,7 @@ import { Model } from 'mongoose';
 import { Report } from './entities/report.entity';
 import { MinioService } from 'src/services/minio';
 import { citizenProp } from 'src/types/loginType';
+import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ReportService {
