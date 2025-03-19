@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
 import { CitizenService } from './citizen.service';
 import { CreateCitizenDto } from './dto/create-citizen.dto';
-import { UpdateCitizenDto } from './dto/update-citizen.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { props } from 'src/types/loginType';
 import { VerificationCitizenService } from './aop/verificationCitizen.service';

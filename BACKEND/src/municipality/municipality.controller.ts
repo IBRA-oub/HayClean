@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
 import { MunicipalityService } from './municipality.service';
 import { CreateMunicipalityDto } from './dto/create-municipality.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
