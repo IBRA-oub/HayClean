@@ -30,7 +30,7 @@ const useAllEvents = () => {
     const updateData = Array.isArray(allEventsData) && allEventsData.length > 0 ?
         allEventsData.map(event => ({
             ...event,
-            image: event?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+            image: event?.image?.replace(/127\.0\.0\.1|minio/g, process.env.EXPO_PUBLIC_IP_ADDRESS),
         }))
         : [];
 
@@ -67,7 +67,7 @@ const useAllEvents = () => {
     const participantData = Array.isArray(data) && data.length > 0 ?
         data.map(not => ({
             ...not,
-            image: not?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+            image: not?.image?.replace(/127\.0\.0\.1|minio/g, process.env.EXPO_PUBLIC_IP_ADDRESS),
         }))
         : null;
 
@@ -75,7 +75,7 @@ const useAllEvents = () => {
     const pendingParticipantData = Array.isArray(pendingParticipant) && pendingParticipant.length > 0 ?
         pendingParticipant.map(not => ({
             ...not,
-            image: not?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+            image: not?.image?.replace(/127\.0\.0\.1|minio/g, process.env.EXPO_PUBLIC_IP_ADDRESS),
         }))
         : null;
 

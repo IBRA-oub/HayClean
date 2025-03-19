@@ -1,9 +1,9 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import * as jwt from 'jsonwebtoken';
-import { Citizen } from 'src/citizen/entities/citizen.entity';
-import { EmailVerification } from 'src/helpers/mailVerification';
+import { Citizen } from '../entities/citizen.entity';
+import { EmailVerification } from '../../helpers/mailVerification';
 
 @Injectable()
 export class VerificationCitizenService {

@@ -13,7 +13,7 @@ const useRecentEvents = () => {
     const updateData = Array.isArray(allEventsData) && allEventsData.length > 0 ?
         allEventsData.map(report => ({
             ...report,
-            image: report?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+            image: report?.image?.replace(/127\.0\.0\.1|minio/g, process.env.EXPO_PUBLIC_IP_ADDRESS),
         }))
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .slice(0, 3)

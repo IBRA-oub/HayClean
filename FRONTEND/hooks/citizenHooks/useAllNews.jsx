@@ -14,7 +14,7 @@ const useAllNews =()=>{
     const updateData = Array.isArray(allNewsData) && allNewsData.length > 0 ?
         allNewsData.map(report => ({
             ...report,
-            image: report?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+            image: report?.image?.replace(/127\.0\.0\.1|minio/g, process.env.EXPO_PUBLIC_IP_ADDRESS),
         }))
         : null;
     return{

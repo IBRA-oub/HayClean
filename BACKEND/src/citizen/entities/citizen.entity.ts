@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { User, UserSchema } from "src/user/entities/user.entity";
+import { User, UserSchema } from "../../user/entities/user.entity";
 
 @Schema()
 export class Citizen extends User {

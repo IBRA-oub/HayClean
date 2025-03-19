@@ -15,7 +15,7 @@ const [loading, setLoading] = useState(true);
     const updateData = Array.isArray(data) && data.length > 0 ?
         data.map(report => ({
             ...report,
-            image: report?.image?.replace("127.0.0.1", process.env.EXPO_PUBLIC_IP_ADDRESS),
+            image: report?.image?.replace(/127\.0\.0\.1|minio/g, process.env.EXPO_PUBLIC_IP_ADDRESS),
             sadCount: report.sad ? report.sad.length : 0
         })).sort((a, b) => b.sadCount - a.sadCount)
         : null;

@@ -1,9 +1,8 @@
 import { CreateCitizenDto } from './dto/create-citizen.dto';
-import { UpdateCitizenDto } from './dto/update-citizen.dto';
 import { Citizen } from './entities/citizen.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { MinioService } from 'src/services/minio';
+import { MinioService } from '../services/minio';
 import * as bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { props } from 'src/types/loginType';
@@ -20,6 +19,11 @@ export class CitizenService {
 
   async create(createCitizenDto: CreateCitizenDto, file?: Express.Multer.File) {
     let imageUrl = file ? await this.uploadImage(file) : null;
+
+    const existingUser = await this.citizenModel.findOne({ email: createCitizenDto.email });
+    if (existingUser) {
+      throw new Error('Email is already in use');
+    }
 
     // hash password
     const salt = await bcrypt.genSalt(10);
@@ -96,9 +100,6 @@ export class CitizenService {
     return `This action returns a #${id} citizen`;
   }
 
-  update(id: number, updateCitizenDto: UpdateCitizenDto) {
-    return `This action updates a #${id} citizen`;
-  }
 
   remove(id: number) {
     return `This action removes a #${id} citizen`;

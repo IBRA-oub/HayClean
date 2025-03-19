@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
 import { CitizenService } from './citizen.service';
 import { CreateCitizenDto } from './dto/create-citizen.dto';
-import { UpdateCitizenDto } from './dto/update-citizen.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { props } from 'src/types/loginType';
 import { VerificationCitizenService } from './aop/verificationCitizen.service';
@@ -41,10 +40,6 @@ export class CitizenController {
     return this.citizenService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCitizenDto: UpdateCitizenDto) {
-    return this.citizenService.update(+id, updateCitizenDto);
-  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
