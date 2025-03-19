@@ -1,5 +1,4 @@
 import { CreateCitizenDto } from './dto/create-citizen.dto';
-import { UpdateCitizenDto } from './dto/update-citizen.dto';
 import { Citizen } from './entities/citizen.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -101,9 +100,6 @@ export class CitizenService {
     return `This action returns a #${id} citizen`;
   }
 
-  update(id: number, updateCitizenDto: UpdateCitizenDto) {
-    return `This action updates a #${id} citizen`;
-  }
 
   remove(id: number) {
     return `This action removes a #${id} citizen`;

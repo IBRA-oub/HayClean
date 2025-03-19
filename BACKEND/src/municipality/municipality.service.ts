@@ -1,5 +1,4 @@
 import { CreateMunicipalityDto } from './dto/create-municipality.dto';
-import { UpdateMunicipalityDto } from './dto/update-municipality.dto';
 import { Municipality } from './entities/municipality.entity';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -89,10 +88,6 @@ export class MunicipalityService {
 
   findOne(id: number) {
     return `This action returns a #${id} municipality`;
-  }
-
-  update(id: number, updateMunicipalityDto: UpdateMunicipalityDto) {
-    return `This action updates a #${id} municipality`;
   }
 
   remove(id: number) {

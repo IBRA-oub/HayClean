@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Headers } from '@nestjs/common';
 import { MunicipalityService } from './municipality.service';
 import { CreateMunicipalityDto } from './dto/create-municipality.dto';
-import { UpdateMunicipalityDto } from './dto/update-municipality.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { props } from 'src/types/loginType';
 import { VerificationMunicipalityService } from './aop/verification.service';
@@ -42,10 +41,6 @@ export class MunicipalityController {
     return this.municipalityService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMunicipalityDto: UpdateMunicipalityDto) {
-    return this.municipalityService.update(+id, updateMunicipalityDto);
-  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

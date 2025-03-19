@@ -13,7 +13,7 @@ jest.mock('jsonwebtoken');
 describe('CitizenService', () => {
   let service: CitizenService;
   let citizenModel: any;
-  let minioService: MinioService;
+  let minioService:any;
   let verificationService: VerificationCitizenService;
 
   beforeEach(async () => {

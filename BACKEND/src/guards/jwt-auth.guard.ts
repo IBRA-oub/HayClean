@@ -18,7 +18,7 @@ export class JwtAuthGuard implements CanActivate {
       request.user = decodedToken;
       return true;
     } catch (error) {
-      throw new HttpException({ message: 'Invalid token', status: 401 }, 401);
+      throw new HttpException({ message: 'Invalid token', status: 401,error }, 401);
     }
   }
 }

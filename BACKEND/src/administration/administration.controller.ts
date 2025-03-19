@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AdministrationService } from './administration.service';
 import { CreateAdministrationDto } from './dto/create-administration.dto';
-import { UpdateAdministrationDto } from './dto/update-administration.dto';
+
 
 @Controller('administration')
 export class AdministrationController {
@@ -20,11 +20,6 @@ export class AdministrationController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.administrationService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAdministrationDto: UpdateAdministrationDto) {
-    return this.administrationService.update(+id, updateAdministrationDto);
   }
 
   @Delete(':id')

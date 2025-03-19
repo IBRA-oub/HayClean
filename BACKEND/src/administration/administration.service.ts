@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAdministrationDto } from './dto/create-administration.dto';
-import { UpdateAdministrationDto } from './dto/update-administration.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Administration } from './entities/administration.entity';
 import { Model } from 'mongoose';
@@ -26,10 +25,6 @@ export class AdministrationService {
 
   findOne(id: number) {
     return `This action returns a #${id} administration`;
-  }
-
-  update(id: number, updateAdministrationDto: UpdateAdministrationDto) {
-    return `This action updates a #${id} administration`;
   }
 
   remove(id: number) {

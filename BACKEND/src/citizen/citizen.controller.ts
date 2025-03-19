@@ -41,10 +41,6 @@ export class CitizenController {
     return this.citizenService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCitizenDto: UpdateCitizenDto) {
-    return this.citizenService.update(+id, updateCitizenDto);
-  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
