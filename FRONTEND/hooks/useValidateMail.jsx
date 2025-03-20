@@ -32,15 +32,22 @@ const useValidateMail = () => {
         let response;
         if (role === 'Citizen') {
             response = await dispatch(mailVerificationCitizen(enteredCode))
+            if (response.payload.status === 200) {
+                toast.show('Email verified', { type: 'success', duration: 3000, placement: "top", });
+                router.push('home')
+            } else if (response.payload.status === 500) {
+                toast.show('Invalid Verified Code', { type: 'danger', duration: 3000, placement: "top", });
+            }
         } else if (role === 'Municipality') {
             response = await dispatch(mailVerificationMunicipality(enteredCode))
+            if (response.payload.status === 200) {
+                toast.show('Email verified', { type: 'success', duration: 3000, placement: "top", });
+                router.push('muniHome')
+            } else if (response.payload.status === 500) {
+                toast.show('Invalid Verified Code', { type: 'danger', duration: 3000, placement: "top", });
+            }
         }
-        if (response.payload.status === 200) {
-            toast.show('Email verified', { type: 'success', duration: 3000, placement: "top", });
-            router.push('home')
-        } else if (response.payload.status === 500) {
-            toast.show('Invalid Verified Code', { type: 'danger', duration: 3000, placement: "top", });
-        }
+
     };
 
     return {

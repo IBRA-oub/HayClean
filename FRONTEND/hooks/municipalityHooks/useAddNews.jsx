@@ -39,7 +39,6 @@ const useAddNews = () => {
     // submit function
     const handleSubmit = async (image, description, onClose) => {
         if (!validateForm(form)) {
-            console.log("Form validation failed!");
             return;
         }
         const formData = new FormData();

@@ -24,8 +24,8 @@ export function ValidateMunicipalityRegister() {
         else if (name.length < 3) {
             setErrors((prevState) => ({ ...prevState, name: "name should contain more than 3 characters" }));
             isFormValid = false;
-        } else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/.test(name)) {
-            setErrors((prevState) => ({ ...prevState, name: "name must contain only letters" }));
+        } else if (!/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/.test(name)) {
+            setErrors((prevState) => ({ ...prevState, name: "Name must contain only letters and spaces" }));
             isFormValid = false;
         }
 

@@ -43,7 +43,6 @@ const useAddEvent = () => {
     // submit function
     const handleSubmit = async () => {
         if (!validateForm(form)) {
-            console.log("Form validation failed!");
             return;
         }
         const formData = new FormData();

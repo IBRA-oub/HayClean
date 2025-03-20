@@ -52,7 +52,7 @@ const CollectionPoints = () => {
             <View style={styles.noItem}>
               
               <FontAwesome6 name="map-location-dot" size={200} color="#b5b5b561" />
-              <Text style={styles.noNews}>No events available</Text>
+              <Text>No collection-point available</Text>
             </View>
           )}
 
