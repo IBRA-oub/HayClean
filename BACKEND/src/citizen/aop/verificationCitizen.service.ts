@@ -13,7 +13,6 @@ export class VerificationCitizenService {
   ) { }
 
   async sendVerificationEmailCitizen(user: Citizen) {
-    console.log(user.verificationCode)
     const verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
     user.verificationCode = verificationCode;
     await user.save();

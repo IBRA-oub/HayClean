@@ -6,17 +6,18 @@ import AddCollectionPointModal from '../../components/municipalityComponents/Add
 import EditeCollectionPointModal from '../../components/municipalityComponents/EditeCollecttionPointModal';
 import useEditeCollectionPoint from '../../hooks/municipalityHooks/useEditeCollectionPoint';
 import MapView, { Marker } from 'react-native-maps';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 
 const CollectionPointsMang = () => {
-    const { router, viewMode, setViewMode, modalVisible, setEditeModalVisible, setModalVisible, editeModalVisible, selectedPoint, handlePress, handleDelete, data,selectedCoords,setSelectedCoords,initialRegion,handleMapPress,copyToClipboard } = useEditeCollectionPoint();
+    const { router, viewMode, setViewMode, modalVisible, setEditeModalVisible, setModalVisible, editeModalVisible, selectedPoint, handlePress, handleDelete, data, selectedCoords, setSelectedCoords, initialRegion, handleMapPress, copyToClipboard } = useEditeCollectionPoint();
 
     useEffect(() => {
         if (viewMode === 'list') {
             setSelectedCoords(null);
         }
     }, [viewMode]);
-    
+
 
 
     return (
@@ -51,9 +52,17 @@ const CollectionPointsMang = () => {
 
             {viewMode === 'list' ? (
                 <ScrollView style={styles.scrollView}>
-                    {data?.map((item, index) => (
-                        <CollectionPointCardMang key={index} index={index + 1} item={item} onEdite={() => handlePress(item)} onDelete={() => handleDelete(item?._id)} />
-                    ))}
+                    {data?.length > 0 ? (
+                        data?.map((item, index) => (
+                            <CollectionPointCardMang key={index} index={index + 1} item={item} onEdite={() => handlePress(item)} onDelete={() => handleDelete(item?._id)} />
+                        ))
+                    ) : (
+                        <View style={styles.noItem}>
+
+                            <FontAwesome6 name="map-location-dot" size={200} color="#b5b5b561" />
+                            <Text>No collection-point available</Text>
+                        </View>
+                    )}
                 </ScrollView>
             ) : (
                 <MapView style={styles.map} initialRegion={initialRegion} mapType="satellite" onPress={handleMapPress}>

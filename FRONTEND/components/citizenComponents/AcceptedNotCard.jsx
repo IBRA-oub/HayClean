@@ -3,6 +3,7 @@ import React from 'react'
 
 
 const AcceptedNotCard = ({ item }) => {
+  console.log(item?.participants?.[0].status)
   return (
     <View style={styles.card}>
       <Image
@@ -11,7 +12,7 @@ const AcceptedNotCard = ({ item }) => {
       />
       <View style={styles.textContainer}>
         <Text style={styles.text}>
-          {item?.participants?.[0].status === "accepte" ?
+          {item?.participants?.[0].status === "accepted" ?
 
             `You have been accepted to the event that will be in ${item?.city}  ${item?.location} on ${item?.date ? new Date(item.date).toISOString().split('T')[0] : 'Invalid Date'}.
               ${"\n"}Be ready, see you!`
